@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Подготовка по технике безопасности</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -11,15 +13,42 @@
             -webkit-tap-highlight-color: transparent;
         }
         
+        :root {
+            --primary-color: #1a2a6c;
+            --secondary-color: #b21f1f;
+            --accent-color: #fdbb2d;
+            --text-color: #333;
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --success-color: #28a745;
+            --warning-color: #f39c12;
+            --danger-color: #dc3545;
+        }
+        
+        body.dark-theme {
+            --primary-color: #4a6bdf;
+            --secondary-color: #e74c3c;
+            --accent-color: #f1c40f;
+            --text-color: #e0e0e0;
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --border-color: #444444;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+        
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 10px;
-            color: #333;
+            color: var(--text-color);
             overflow-x: hidden;
+            transition: background 0.3s ease;
         }
         
         .container {
@@ -31,6 +60,8 @@
             padding: 20px;
             position: relative;
             overflow: hidden;
+            background-color: var(--card-bg);
+            transition: background-color 0.3s ease;
         }
         
         .container::before {
@@ -40,15 +71,31 @@
             left: 0;
             width: 100%;
             height: 10px;
-            background: linear-gradient(90deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
         }
         
         h1 {
             text-align: center;
-            color: #1a2a6c;
+            color: var(--primary-color);
             margin-bottom: 20px;
             font-size: 1.8rem;
             line-height: 1.2;
+        }
+        
+        .theme-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
         }
         
         .screen {
@@ -66,7 +113,7 @@
         }
         
         .btn {
-            background: linear-gradient(45deg, #1a2a6c, #2c3e50);
+            background: linear-gradient(45deg, var(--primary-color), #2c3e50);
             color: white;
             border: none;
             padding: 18px 25px;
@@ -81,35 +128,103 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
+            text-align: center;
         }
         
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(45deg, #2c3e50, #1a2a6c);
+            background: linear-gradient(45deg, #2c3e50, var(--primary-color));
         }
         
         .btn-exam {
-            background: linear-gradient(45deg, #b21f1f, #e74c3c);
+            background: linear-gradient(45deg, var(--secondary-color), #e74c3c);
         }
         
         .btn-exam:hover {
-            background: linear-gradient(45deg, #e74c3c, #b21f1f);
+            background: linear-gradient(45deg, #e74c3c, var(--secondary-color));
+        }
+        
+        .btn-hint {
+            background: linear-gradient(45deg, var(--warning-color), #e67e22);
+            font-size: 0.9rem;
+            padding: 12px 20px;
+            max-width: 200px;
+        }
+        
+        .btn-hint:hover {
+            background: linear-gradient(45deg, #e67e22, var(--warning-color));
+        }
+        
+        .btn-hint:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-favorite {
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            font-size: 0.9rem;
+            padding: 12px 20px;
+            max-width: 200px;
+        }
+        
+        .btn-favorite:hover {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+        }
+        
+        .btn-favorite.active {
+            background: linear-gradient(45deg, var(--danger-color), #c0392b);
+        }
+        
+        .btn-favorite.active:hover {
+            background: linear-gradient(45deg, #c0392b, var(--danger-color));
+        }
+        
+        .btn-restart {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+        }
+        
+        .btn-restart:hover {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+        }
+        
+        .btn-search {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            font-size: 0.9rem;
+            padding: 12px 20px;
+            max-width: 200px;
+        }
+        
+        .btn-search:hover {
+            background: linear-gradient(45deg, #2980b9, #3498db);
+        }
+        
+        .btn-cards {
+            background: linear-gradient(45deg, #16a085, #1abc9c);
+            font-size: 0.9rem;
+            padding: 12px 20px;
+            max-width: 200px;
+        }
+        
+        .btn-cards:hover {
+            background: linear-gradient(45deg, #1abc9c, #16a085);
         }
         
         .question-container {
-            background: #f8f9fa;
+            background: var(--bg-color);
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
-            border-left: 5px solid #1a2a6c;
+            border-left: 5px solid var(--primary-color);
+            transition: background-color 0.3s ease;
         }
         
         .question {
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 20px;
-            color: #2c3e50;
+            color: var(--text-color);
             line-height: 1.4;
         }
         
@@ -119,8 +234,8 @@
         }
         
         .option {
-            background: white;
-            border: 2px solid #e0e0e0;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
             border-radius: 10px;
             padding: 15px;
             cursor: pointer;
@@ -130,16 +245,33 @@
             min-height: 70px;
             display: flex;
             align-items: center;
+            color: var(--text-color);
         }
         
         .option:hover {
-            border-color: #1a2a6c;
-            background: #f0f7ff;
+            border-color: var(--primary-color);
+            background: rgba(0, 0, 0, 0.05);
             transform: translateX(5px);
         }
         
+        .option.correct {
+            background: #d4edda;
+            border-color: var(--success-color);
+            font-weight: 600;
+        }
+        
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: var(--danger-color);
+        }
+        
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
         .timer {
-            background: #b21f1f;
+            background: var(--secondary-color);
             color: white;
             padding: 15px;
             border-radius: 10px;
@@ -150,7 +282,7 @@
         }
         
         .ticket-info {
-            background: #1a2a6c;
+            background: var(--primary-color);
             color: white;
             padding: 15px;
             border-radius: 10px;
@@ -165,7 +297,7 @@
         }
         
         .result h2 {
-            color: #1a2a6c;
+            color: var(--primary-color);
             margin-bottom: 20px;
             font-size: 1.8rem;
         }
@@ -174,7 +306,7 @@
             font-size: 2.5rem;
             font-weight: bold;
             margin: 20px 0;
-            color: #b21f1f;
+            color: var(--secondary-color);
         }
         
         .result-message {
@@ -185,7 +317,7 @@
         
         .progress-bar {
             height: 10px;
-            background: #e0e0e0;
+            background: var(--border-color);
             border-radius: 5px;
             margin-bottom: 20px;
             overflow: hidden;
@@ -193,17 +325,269 @@
         
         .progress {
             height: 100%;
-            background: linear-gradient(90deg, #1a2a6c, #b21f1f);
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             width: 0%;
             transition: width 0.5s ease;
         }
         
-        .btn-restart {
-            background: linear-gradient(45deg, #27ae60, #2ecc71);
+        .stats-container {
+            background: var(--bg-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
         }
         
-        .btn-restart:hover {
-            background: linear-gradient(45deg, #2ecc71, #27ae60);
+        .stats-header {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .stats-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .stats-item:last-child {
+            border-bottom: none;
+        }
+        
+        .stats-date {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .stats-result {
+            font-weight: 600;
+        }
+        
+        .stats-result.excellent {
+            color: var(--success-color);
+        }
+        
+        .stats-result.good {
+            color: #3498db;
+        }
+        
+        .stats-result.satisfactory {
+            color: var(--warning-color);
+        }
+        
+        .stats-result.failed {
+            color: var(--danger-color);
+        }
+        
+        .hint-info {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #856404;
+            font-weight: 600;
+        }
+        
+        .favorite-info {
+            background: #e8f4fc;
+            border: 1px solid #bee5eb;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #0c5460;
+            font-weight: 600;
+        }
+        
+        .trainer-info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #0c5460;
+            font-weight: 600;
+        }
+        
+        .no-stats {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 20px;
+        }
+        
+        .explanation {
+            background: #e8f5e9;
+            border-left: 4px solid var(--success-color);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            color: #2e7d32;
+            display: none;
+        }
+        
+        .explanation.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 200px; }
+        }
+        
+        .achievements {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .achievement {
+            background: var(--bg-color);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .achievement:hover {
+            transform: scale(1.1);
+        }
+        
+        .achievement.locked {
+            opacity: 0.5;
+            filter: grayscale(100%);
+        }
+        
+        .achievement-tooltip {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .achievement:hover .achievement-tooltip {
+            opacity: 1;
+        }
+        
+        .search-container {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 50px;
+            border: 2px solid var(--border-color);
+            font-size: 1rem;
+            background: var(--card-bg);
+            color: var(--text-color);
+            transition: border-color 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+        
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        
+        .category-btn {
+            background: var(--bg-color);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+        }
+        
+        .category-btn:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .category-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .card-container {
+            background: var(--bg-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .card-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+        
+        .card-answer {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .card-answer.show {
+            opacity: 1;
+        }
+        
+        .chart-container {
+            height: 200px;
+            margin: 20px 0;
         }
         
         /* Мобильная адаптация */
@@ -333,31 +717,73 @@
 </head>
 <body>
     <div class="container">
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+            <i class="fas fa-moon"></i>
+        </button>
+        
         <h1>Подготовка по технике безопасности</h1>
         
         <!-- Начальный экран -->
         <div id="startScreen" class="screen active">
             <div style="text-align: center; margin: 30px 0;">
-                <p style="font-size: 1.1rem; margin-bottom: 25px; color: #555;">
+                <p style="font-size: 1.1rem; margin-bottom: 25px; color: var(--text-color);">
                     Выберите режим тестирования:
                 </p>
                 <button class="btn" onclick="startTraining()">Режим обучения</button>
                 <button class="btn btn-exam" onclick="startExam()">Пройти экзамен</button>
+                <button class="btn btn-favorite" onclick="startFavorites()">Избранные вопросы</button>
+                <button class="btn btn-restart" onclick="startTrainer()">Тренажер ошибок</button>
+                <button class="btn btn-search" onclick="startSearch()">Поиск вопросов</button>
+                <button class="btn btn-cards" onclick="startCards()">Карточки</button>
             </div>
             
-            <div style="background: #f0f7ff; padding: 20px; border-radius: 10px; margin-top: 25px;">
-                <h3 style="color: #1a2a6c; margin-top: 0;">Информация:</h3>
+            <div class="achievements">
+                <div class="achievement" id="achievement1">
+                    <i class="fas fa-star"></i>
+                    <div class="achievement-tooltip">Новичок</div>
+                </div>
+                <div class="achievement locked" id="achievement2">
+                    <i class="fas fa-fire"></i>
+                    <div class="achievement-tooltip">Стремительный</div>
+                </div>
+                <div class="achievement locked" id="achievement3">
+                    <i class="fas fa-trophy"></i>
+                    <div class="achievement-tooltip">Эксперт</div>
+                </div>
+                <div class="achievement locked" id="achievement4">
+                    <i class="fas fa-medal"></i>
+                    <div class="achievement-tooltip">Мастер</div>
+                </div>
+            </div>
+            
+            <div style="background: var(--bg-color); padding: 20px; border-radius: 10px; margin-top: 25px; transition: background-color 0.3s ease;">
+                <h3 style="color: var(--primary-color); margin-top: 0;">Информация:</h3>
                 <ul style="padding-left: 20px; line-height: 1.7;">
                     <li>Режим обучения: это 63 вопроса без ограничения времени</li>
                     <li>Экзамен: это 30 минут, случайный билет (10 или 13 вопросов)</li>
+                    <li>Избранные вопросы: повторение отмеченных вопросов</li>
+                    <li>Тренажер ошибок: повторение вопросов с неправильными ответами</li>
+                    <li>Поиск вопросов: поиск по ключевым словам</li>
+                    <li>Карточки: изучение в формате вопрос-ответ</li>
                     <li>Ухпп ЦЕХ № 4</li>
-					
                 </ul>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stats-header">История экзаменов</div>
+                <div id="statsList">
+                    <div class="no-stats">Нет результатов экзаменов</div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="progressChart"></canvas>
+                </div>
             </div>
         </div>
         
         <!-- Экран обучения -->
         <div id="trainingScreen" class="screen">
+            <div class="hint-info" id="hintInfo">Подсказок осталось: 3</div>
+            
             <div class="progress-bar">
                 <div class="progress" id="trainingProgress"></div>
             </div>
@@ -365,9 +791,12 @@
             <div class="question-container">
                 <div class="question" id="trainingQuestion"></div>
                 <div class="options" id="trainingOptions"></div>
+                <div class="explanation" id="trainingExplanation"></div>
             </div>
             
             <div style="text-align: center; margin-top: 25px;">
+                <button class="btn btn-hint" id="hintBtn" onclick="useHint()">Использовать подсказку</button>
+                <button class="btn btn-favorite" id="favoriteBtn" onclick="toggleFavorite()">Добавить в избранное</button>
                 <button class="btn" onclick="backToStart()">Вернуться в меню</button>
             </div>
         </div>
@@ -384,6 +813,7 @@
             <div class="question-container">
                 <div class="question" id="examQuestion"></div>
                 <div class="options" id="examOptions"></div>
+                <div class="explanation" id="examExplanation"></div>
             </div>
             
             <div style="text-align: center; margin-top: 25px;">
@@ -400,10 +830,85 @@
                 <button class="btn btn-restart" onclick="backToStart()">Пройти заново</button>
             </div>
         </div>
+        
+        <!-- Экран избранных вопросов -->
+        <div id="favoritesScreen" class="screen">
+            <div class="favorite-info">Избранные вопросы: <span id="favoritesCount">0</span></div>
+            
+            <div class="progress-bar">
+                <div class="progress" id="favoritesProgress"></div>
+            </div>
+            
+            <div class="question-container">
+                <div class="question" id="favoritesQuestion"></div>
+                <div class="options" id="favoritesOptions"></div>
+                <div class="explanation" id="favoritesExplanation"></div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 25px;">
+                <button class="btn" onclick="backToStart()">Вернуться в меню</button>
+            </div>
+        </div>
+        
+        <!-- Экран тренажера -->
+        <div id="trainerScreen" class="screen">
+            <div class="trainer-info">Вопросы с ошибками: <span id="trainerCount">0</span></div>
+            
+            <div class="progress-bar">
+                <div class="progress" id="trainerProgress"></div>
+            </div>
+            
+            <div class="question-container">
+                <div class="question" id="trainerQuestion"></div>
+                <div class="options" id="trainerOptions"></div>
+                <div class="explanation" id="trainerExplanation"></div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 25px;">
+                <button class="btn" onclick="backToStart()">Вернуться в меню</button>
+            </div>
+        </div>
+        
+        <!-- Экран поиска -->
+        <div id="searchScreen" class="screen">
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Поиск по ключевым словам..." onkeyup="searchQuestions()">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            
+            <div class="category-filter" id="categoryFilter">
+                <button class="category-btn active" onclick="filterByCategory('all')">Все категории</button>
+                <button class="category-btn" onclick="filterByCategory('Первая помощь')">Первая помощь</button>
+                <button class="category-btn" onclick="filterByCategory('Оборудование')">Оборудование</button>
+                <button class="category-btn" onclick="filterByCategory('Безопасность')">Безопасность</button>
+                <button class="category-btn" onclick="filterByCategory('Химия')">Химия</button>
+            </div>
+            
+            <div id="searchResults" class="stats-container">
+                <div class="no-stats">Введите ключевые слова для поиска</div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 25px;">
+                <button class="btn" onclick="backToStart()">Вернуться в меню</button>
+            </div>
+        </div>
+        
+        <!-- Экран карточек -->
+        <div id="cardsScreen" class="screen">
+            <div class="card-container">
+                <div class="card-question" id="cardQuestion">Нажмите "Далее" для начала</div>
+                <div class="card-answer" id="cardAnswer"></div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 25px;">
+                <button class="btn" id="cardBtn" onclick="nextCard()">Далее</button>
+                <button class="btn" onclick="backToStart()">Вернуться в меню</button>
+            </div>
+        </div>
     </div>
     
     <script>
-        // Все вопросы из документа
+        // Все вопросы из документа с категориями и объяснениями
         const questions = [
             {
                 question: "Первая помощь пострадавшему от электрического тока если пострадавший в сознании",
@@ -412,7 +917,9 @@
                     "Если пострадавший в сознании, но до этого был в обмороке или находился в бессознательном состоянии, но с сохранившимися устойчивыми дыханием и пульсом, его следует уложить на подстилку, например, из одежды; расстегнуть одежду, стесняющую дыхание; создать приток свежего воздуха; согреть тело, если холодно; обеспечить прохладу, если жарко; создать полный покой, непрерывно наблюдая за пульсом и дыханием; удалить лишних людей.",
                     "Если у пострадавшего отсутствуют сознание, дыхание, пульс, кожный покров синюшный, а зрачки широкие (0,5 см в диаметре), можно считать, что он находится в состоянии клинической смерти, и немедленно приступать к реанимационным мероприятиям с помощью искусственного дыхания по способу «изо рта в рот» или «изо рта в нос» и наружного массажа сердца. Не следует раздевать пострадавшего, теряя драгоценные секунды"
                 ],
-                correct: 1
+                correct: 1,
+                category: "Первая помощь",
+                explanation: "Правильный ответ: Если пострадавший в сознании... Объяснение: Важно обеспечить полный покой и наблюдение за состоянием, так как даже после кажущегося улучшения возможны осложнения."
             },
             {
                 question: "Дайте определения понятию первая помощь?",
@@ -420,7 +927,9 @@
                     "Первая помощь - это простейшие медицинские действия, выполняемые непосредственно на месте происшествия, в кратчайшие сроки после травмы. Она оказывается, как правило, не медиками, а работником, находящимся в момент происшествия непосредственно на месте происшествия или вблизи от него. Считается оптимальным сроком оказания первой помощи - 30 минут после травмы.",
                     "Первая помощь до оказания медицинской помощи оказывается гражданам при несчастных случаях, травмах, отравлениях и других состояниях и заболеваниях, угрожающих их жизни и здоровью, лицами, обязанными оказывать первую помощь в соответствии с федеральным законом или со специальным правилом и имеющими соответствующую подготовку, в том числе сотрудниками органов внутренних дел РФ, сотрудниками, военнослужащими и работниками государственной противопожарной службы, спасателями аварийно-спасательных формирований и аварийно-спасательных служб"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Первая помощь",
+                explanation: "Правильный ответ: Первая помощь - это простейшие медицинские действия... Объяснение: Ключевой аспект - оказание помощи непосредственно на месте происшествия в кратчайшие сроки."
             },
             {
                 question: "Первая помощь при артериальном кровотечении?",
@@ -428,7 +937,9 @@
                     "положить пострадавшего так, чтобы рана находилась выше уровня сердца. Логично, чисто физически кровь будет меньше литься , зажать артерию выше места повреждения, наложить жгут выше разрыва. Необходимо чтобы артерия прижалась к кости и престала литься кровь. Это возможно на бедре и плече. Поэтому если фонтанчик идет из пальца, все равно накладываем жгут на плечо, обязательно пишем на бумажке время наложения жгута и подкладываем под жгут, если он будет долго находится, возможно отмирание тканей, что может стоить человеку конечности или жизни, транспортируем пострадавшего в ближайшую больницу",
                     "При обнаружении признаков артериального кровотечения желательно задействовать двух человек для оказания помощи. Первый должен прижать поврежденный кровеносный сосуд пальцем. Для этого нужно найти место, где артерия проходит над костью. Второй человек в это время готовит средства для более продолжительной остановки крови. Давящую повязку можно использовать только в случае ранения мелких артерий (пальцевых, ладонных, плюсневых). Остановить кровотечение из более крупного сосуда можно, наложив жгут. При ранении конечности эффективным кровоостанавливающим действием будет сгибание сустава с максимальным усилием. Если человек находится в сознании, он может сделать это сам. Окружающим нужно лишь придерживать руку или ногу в нужном положении или усиливать давление. При потере сознания (что для артериального кровотечения характерно) в область сустава накладывают бинт, а саму конечность в согнутой позиции фиксируют ремнем. Записать время наложения жгута. Ослаблять его каждые 10-15 минут во избежание изменений в тканях. Если пострадавший стабилен, зафиксировать раненую конечность в удобном положении. При обильной кровопотере уложить пострадавшего на спину и высоко приподнять его ноги (на 30-40 см), используя подушку или связку одежды. В случае потери сознания убедиться в наличии признаков жизни и перевернуть на бок (если обеспечивается устойчивое положение тела) или на живот. Важно держать под контролем пульс и дыхание человека. При их отсутствии нужно немедленно приступать к сердечно-легочной реанимации. Главная задача оказания помощи своими силами — сохранить раненому жизнь до приезда врачей."
                 ],
-                correct: 1
+                correct: 1,
+                category: "Первая помощь",
+                explanation: "Правильный ответ: При обнаружении признаков артериального кровотечения... Объяснение: Важно задействовать двух человек: один прижимает сосуд, другой готовит средства для остановки крови. Ключевые моменты: наложение жгута с фиксацией времени, контроль пульса и дыхания."
             },
             {
                 question: "Перечислить 3 стадии общего переохлаждения?",
@@ -438,38 +949,46 @@
                     "Все вышеперечисленное",
                     "I степень – ознобление, II степень – образование пузырей, III степень – некроз кожи"
                 ],
-                correct: 1
+                correct: 1,
+                category: "Первая помощь",
+                explanation: "Правильный ответ: легкая, средней тяжести, тяжелая. Объяснение: Стадии переохлаждения классифицируются по тяжести состояния: легкая (дрожь, бледность), средней тяжести (сонливость, нарушение координации), тяжелая (потеря сознания, остановка дыхания)."
             },
             {
                 question: "Первые симптомы при укусе змеи?",
                 options: [
-                    "Зуд, боли, невралгических болей по ходу ближайших к месту укуса нервных путей. Больные испытывают беспричинный страх, тоску, тревогу, появляется повышенная чувствительность к звуковым и световым раздражителям, резко повышается температура.",
+                    "Зуд, боли, невралгических болей по ходу ближайших к месту укуса нервных путей. Больные испытывают беспричинный страх, тоску, тревогу, появляются повышенная чувствительность к звуковым и световым раздражителям, резко повышается температура.",
                     "ушиб, разрыв, размозжение тканей, а также обильное обсеменение микробной микрофлорой, содержащейся в слюне. Возможно заражение бешенством",
-                    "Стадия возбуждения – длится от 4 до 7 дней и проявляется периодическими приступами психомоторного возбуждения. Выражаются в резко повышенной чувствительности к малейшим раздражениям органов чувств: яркий свет, различные звуки, шум. Больные становятся агрессивными, буйными, появляются галлюцинации, бред, чувство страха, появляются судороги, парезы и параличи мышц. Стадия возбуждения, как правило, сопровождается лихорадкой до 400 С"
+                    "Стадия возбуждения – длится от 4 до 7 дней и проявляется периодическими приступами психомоторного возбуждения. Выражаются в резко повышенной чувствительности к малейшим раздражителям органов чувств: яркий свет, различные звуки, шум. Больные становятся агрессивными, буйными, появляются галлюцинации, бред, чувство страха, появляются судороги, парезы и параличи мышц. Стадия возбуждения, как правило, сопровождается лихорадкой до 400 С"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Первая помощь",
+                explanation: "Правильный ответ: Зуд, боли, невралгических болей... Объяснение: При укусе змеи характерны местные симптомы (зуд, боль) и общие реакции (страх, тревога, светочувствительность, повышение температуры)."
             },
             {
                 question: "На какие степени по глубине поражения делятся ожоги?",
                 options: [
                     "покраснение и отек кожи",
                     "водяные пузыри",
-                    "омертвление поверхностных и глубоких слоев кожи",
+                    "омертвение поверхностных и глубоких слоев кожи",
                     "обугливание кожи, поражение мышц, сухожилий и костей",
                     "Все вышеперечисленное.",
                     "Ответ 2,1,4"
                 ],
-                correct: 4
+                correct: 4,
+                category: "Первая помощь",
+                explanation: "Правильный ответ: Все вышеперечисленное. Объяснение: Ожоги классифицируются по 4 степеням: I - покраснение, II - пузыри, III - некроз кожи, IV - обугливание с поражением глубоких тканей."
             },
             {
                 question: "Первая помощь при обмороке, тепловом и солнечных ударах и отравлениях?",
                 options: [
                     "Необходимо расстегнуть одежду пострадавшего, стесняющую дыхание, обеспечить приток свежего воздуха, дать ему выпить холодной воды, давать нюхать нашатырный спирт. Класть на голову холодные примочки и лед не следует. Лицо и грудь можно смочить холодной водой. Так же следует поступать, если обморок уже наступил",
                     "пострадавшего необходимо вывести или вынести из жаркого помещения или удалить с солнцепека в тень, прохладное помещение, обеспечив приток свежего воздуха. Его следует уложить так, чтобы голова была выше туловища, расстегнуть одежду, стесняющую дыхание, положить на голову лед или делать холодные примочки, смочить грудь холодной водой, давать нюхать нашатырный спирт. Если пострадавший в сознании, нужно дать ему выпить 15-20 капель настойки валерианы на 1/3 стакана воды",
-                    "вывести или вынести пострадавшего из отравленной зоны, расстегнуть одежду, стесняющую дыхание, обеспечить приток свежего воздуха, уложить его, приподнять ноги, укрыть потеплее, давать нюхать нашатырный спирт",
+                    "вывести или вынести пострадавшего из отравленной зоны, расстегнуть одежду, стесняющую дыхание, обеспечить приток свежего воздуха, уложить его, приподняв ноги, укрыть потеплее, давать нюхать нашатырный спирт",
                     "Все вышеперечисленное."
                 ],
-                correct: 3
+                correct: 3,
+                category: "Первая помощь",
+                explanation: "Правильный ответ: Все вышеперечисленное. Объяснение: При обмороке, тепловом ударе и отравлениях общие принципы помощи: обеспечить доступ свежего воздуха, уложить пострадавшего, расстегнуть одежду, использовать нашатырный спирт."
             },
             {
                 question: "Радиус опасной зоны при проведении пропарочных работ ППУА-1600\\100?",
@@ -479,7 +998,9 @@
                     "проведения пропарочных работ в радиусе - не менее 40м. Место проведения пропарочных работ обозначить знаками «ОСТОРОЖНО! ТЕПЛОВАЯ ОБРАБОТКА»",
                     "проведения пропарочных работ в радиусе - не менее 10м. Место проведения пропарочных работ обозначить знаками «ОСТОРОЖНО! ТЕПЛОВАЯ ОБРАБОТКА»"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Оборудование",
+                explanation: "Правильный ответ: проведения пропарочных работ в радиусе - не менее 50м... Объяснение: Безопасное расстояние при работе с ППУА-1600/100 должно быть не менее 50 метров с обязательным обозначением зоны знаками безопасности."
             },
             {
                 question: "Чем должна быть укомплектована установка промысловая паровая передвижная ППУА-1600\\100",
@@ -487,7 +1008,9 @@
                     "ППУ должна быть укомплектована сертифицированным искрогасителем, средствами пожаротушения, противооткатными башмаками. ППУ должна быть укомплектована исправной гибкой линией, магистральными паровыми трубами для проведения термических обработок скважин горячим паром путём «жёсткого» подключения (обеспечить наличие обратного клапана) и металлическим наконечником, который должен быть длиною 1500-2000 мм и внутренним диаметром 20 - 25 мм, при этом должна быть обеспечена исправность резьбовых соединений и надежность крепления термостойкого шланга к металлическому наконечнику (пистолету) специальными хомутами.",
                     "ППУ должна быть укомплектована сертифицированным искрогасителем, средствами пожаротушения, противооткатными башмаками. ППУ должна быть укомплектована исправной гибкой линией, магистральными паровыми трубами для проведения термических обработок скважин горячим паром путём «жёсткого» подключения (обеспечить наличие обратного клапана) и металлическим наконечником, который должен быть длиною 500-1000 мм и внутренним диаметром 20 - 25 мм, при этом должна быть обеспечена исправность резьбовых соединений и надежность крепления термостойкого шланга к металлическому наконечнику (пистолету) специальными хомутами"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Оборудование",
+                explanation: "Правильный ответ: ППУ должна быть укомплектована... Объяснение: Ключевые требования: искрогаситель, средства пожаротушения, противооткатные башмаки, гибкая линия, металлический наконечник длиной 1500-2000 мм."
             },
             {
                 question: "На каком расстояние от действующих резервуаров должна размещаться ППУА1600\\100?",
@@ -497,7 +1020,9 @@
                     "50 метров",
                     "30 метров"
                 ],
-                correct: 1
+                correct: 1,
+                category: "Оборудование",
+                explanation: "Правильный ответ: 40 метров. Объяснение: Безопасное расстояние размещения ППУА-1600/100 от действующих резервуаров должно составлять не менее 40 метров для предотвращения аварийных ситуаций."
             },
             {
                 question: "Действие работника по окончанию работ при помощи установки промысловой паровой передвижной ППУА-1600\\100?",
@@ -505,7 +1030,9 @@
                     "подать установленный сигнал машинисту установки (в случае необходимости через сигнальщика) на прекращение подачи пара; остановить работу ППУ; снизить давление в паропроводе до атмосферного; дождаться полного остывания паропроводов; разобрать паропровод; уложить в транспортное положение паропровод и закрепить на автомобиле; убрать замазученность на месте производства работ; доложить специалисту, ответственному за безопасное производство работ и (или) своему непосредственному руководителю, специалисту о выполненной работе.",
                     "подать установленный сигнал машинисту установки (в случае необходимости через сигнальщика) на прекращение подачи пара; остановить работу ППУ; разобрать паропровод; уложить в транспортное положение паропровод и закрепить на автомобиле;доложить специалисту, ответственному за безопасное производство работ и (или) своему непосредственному руководителю, специалисту о выполненной работе"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Оборудование",
+                explanation: "Правильный ответ: подать установленный сигнал... Объяснение: Важные шаги: остановка подачи пара, снижение давления, остывание оборудования, разборка паропровода, уборка рабочего места, доклад руководителю."
             },
             {
                 question: "Что необходимо проверить перед началом производства работ по проведению паротепловых обработок?",
@@ -513,7 +1040,9 @@
                     "наличие специальной одежды, специальной обуви, маски защитной, каски защитной, рукавиц, их соответствие установленным нормам выдачи СИЗ, исправность резьбовых соединений; надежность крепления термостойкого шланга специальными хомутами.",
                     "укомплектованность и исправность гибкой линии, магистральных паровых труб и фланцевых присоединений для проведения термических обработок скважин горячим паром путём «жёсткого» подключения и металлическим наконечником, который должен быть длиною 1500-2000 мм и внутренним диаметром 20 - 25 мм; предупредительный знак: «ОСТОРОЖНО! ТЕПЛОВАЯ ОБРАБОТКА»; защитный экран сферической или квадратной формы, со стороной квадрата (круга) не менее 500 мм, выполненного из мягкого листового железа, оборудованного посредине экрана отверстием под металлический наконечник термостойкого шланга"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Оборудование",
+                explanation: "Правильный ответ: наличие специальной одежды... Объяснение: Перед началом работ необходимо проверить СИЗ, исправность соединений и креплений. Это основа безопасности при проведении паротепловых обработок."
             },
             {
                 question: "В каких случаях паровая установка должна быть немедленно остановлена и работы на ней прекращены?",
@@ -523,7 +1052,9 @@
                     "Вышеперечисленное.",
                     "Нет правильного ответа"
                 ],
-                correct: 2
+                correct: 2,
+                category: "Оборудование",
+                explanation: "Правильный ответ: Вышеперечисленное. Объяснение: Паровая установка должна быть остановлена при любом из перечисленных случаев: пожар, прорыв трубопроводов, неисправности оборудования, разгерметизация."
             },
             {
                 question: "Какой основной способ блокировки должен использоваться для отключения горючих и инертных газов,горючих и агрессивных жидкостей в первую очередь?",
@@ -531,7 +1062,9 @@
                     "Для отключения горючих и инертных газов, горючих и агрессивных жидкостей в первую очередь должен быть использован основной способ блокировки: должены быть штатные заглушки, с соответствующими записями об установке, при подготовке, и снятию их, при окончании работ по ремонту и техническому обслуживанию технологического оборудования.",
                     "Для отключения горючих и инертных газов, горючих и агрессивных жидкостей в первую очередь должен быть использован основной способ блокировки: не штатные заглушки, с соответствующими записями об установке, при подготовке, и снятию их, при окончании работ"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Для отключения горючих и инертных газов... Объяснение: Основной способ блокировки - использование штатных заглушек с обязательным документальным оформлением установки и снятия."
             },
             {
                 question: "Кто имеет доступ к месту для хранения блокираторов, замков и вспомогательного оборудования?",
@@ -539,7 +1072,9 @@
                     "Доступ к шкафу для хранения блокираторов, замков и вспомогательного оборудования имеют начальник (заместитель начальника) цеха (участка), механник, мастер, производственного объекта, которые должны выдавать устройства, внося информацию в «Журнал учета выдачи блокираторов и замков",
                     "Доступ к шкафу для хранения блокираторов, замков и вспомогательного оборудования имеют начальник (заместитель начальника) цеха (участка), производственного объекта, которые должны выдавать устройства, внося информацию в «Журнал учета выдачи блокираторов и замков."
                 ],
-                correct: 1
+                correct: 1,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Доступ к шкафу для хранения... Объяснение: Доступ ограничен ответственными лицами: начальник цеха и его заместитель, которые ведут журнал учета выдачи блокирующих устройств."
             },
             {
                 question: "Какая документация должна хранится на постах хранения блокирующих устройств",
@@ -547,7 +1082,9 @@
                     "Журнал учета выдачи замков, Журнал передачи ключей по смене, Журнал использования Мастер-ключа",
                     "Журнал учета выдачи блокираторов и замков, Журнал передачи ключей по смене, Журнал использования Мастер-ключа, Памятки по применению блокирующих устройств и проектов (планов) блокировки, отключения оборудования и его элементов."
                 ],
-                correct: 1
+                correct: 1,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Журнал учета выдачи блокираторов и замков... Объяснение: Полный комплект документации включает журналы учета, передачи ключей, использования мастер-ключа и памятки по применению блокирующих устройств."
             },
             {
                 question: "Как функционально различаются блокировочные навесные замки?",
@@ -556,7 +1093,9 @@
                     "Для облегчения идентификации блокировочные навесные замки функционально разделены по цветовой гамме – по службам и назначению.",
                     "Для облегчения идентификации блокировочные навесные замки функционально разделены по цветовой гамме"
                 ],
-                correct: 1
+                correct: 1,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Для облегчения идентификации... Объяснение: Блокировочные замки различаются по цветовой гамме, что позволяет быстро определить принадлежность к конкретной службе и назначению."
             },
             {
                 question: "Для облегчения идентификации блокировочные навесные замки функционально разделены по цветовой гамме",
@@ -569,14 +1108,18 @@
                     "Ответ 1,2,3,5.",
                     "Нет правильного ответа"
                 ],
-                correct: 5
+                correct: 5,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Ответ 1,2,3,5. Объяснение: Требования безопасности при работе с кранами-манипуляторами включают: запрет нахождения посторонних лиц, обеспечение безопасных расстояний, условия установки у котлованов, отключение двигателя при ремонте."
             },
             {
                 question: "Что включают в себя подготовительные работы перед проведением огневых работ на временных местах?",
                 options: [
                     "Подготовка объекта к проведению на нем огневых работ, остановить работающее оборудование; перекрыть запорную арматуру на приеме и выходе; освободить трубопроводы от избыточного давления; освободить от взрывоопасных, взрывопожароопасных, пожароопасных и токсичных продуктов, промыть, при необходимости пропарить, загерметизировать (перекрыть) места возможного поступления вредных/ горючих паров и газов, очистить, до отсутствия взрывопожароопасных веществ, подтвержденных анализом воздушной среды, закрыть негорючими материалами все смотровые, технологические и другие люки (лючки), вентиляционные, монтажные и другие проемы, защитить металлическим экраном, покрывалами или другими негорючими материалами."
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Подготовка объекта к проведению... Объяснение: Подготовка включает остановку оборудования, перекрытие арматуры, сброс давления, очистку от опасных веществ, герметизацию, защиту проемов негорючими материалами."
             },
             {
                 question: "На какие виды подразделяются ремонтные работы?",
@@ -584,21 +1127,27 @@
                     "плановые ремонтные работы; внеплановые (неплановые) ремонтные работы; аварийно-восстановительные ремонтные работы.",
                     "ремонтные работы; внеплановые (неплановые) ремонтные работы; аварийно-восстановительные ремонтные работы"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: плановые ремонтные работы; внеплановые... Объяснение: Ремонтные работы классифицируются на плановые (по графику), внеплановые (непредвиденные) и аварийно-восстановительные (после аварий)."
             },
             {
                 question: "Какую маркировку должна иметь запорная арматура?",
                 options: [
                     "наименование или товарный знак завода-изготовителя; условный проход, мм; условное давление, МПа (кгс/см2); направление потока среды в соответствии с маркировкой на корпусе запорной арматуры; марку материала корпуса."
                 ],
-                correct: 0
+                correct: 0,
+                category: "Оборудование",
+                explanation: "Правильный ответ: наименование или товарный знак... Объяснение: Запорная арматура должна иметь маркировку с указанием производителя, условного прохода, давления, направления потока и материала корпуса."
             },
             {
                 question: "Какие требования необходимо выполнять перед монтажом запорной арматуры?",
                 options: [
                     "снять заглушки; расконсервировать запорную арматуру; заменить сальниковую набивку; при закрытом клиновым затворе очистить проходы от возможных загрязнений; очистить трубопровод от загрязнений, хорошо его закрепить; обеспечить полное совпадение болтовых отверстий фланцев на трубопроводе с отверстиями во фланцах задвижки."
                 ],
-                correct: 0
+                correct: 0,
+                category: "Оборудование",
+                explanation: "Правильный ответ: снять заглушки; расконсервировать... Объяснение: Перед монтажом необходимо: снять заглушки, расконсервировать, заменить набивку, очистить проходы, закрепить трубопровод, совместить отверстия фланцев."
             },
             {
                 question: "Какие работы относятся к работам в замкнутом пространстве",
@@ -607,7 +1156,9 @@
                     "Это работы повышенной опасности , работы при недостаточном содержание кислорода (более 20%) ,которой невозможно без участия человека",
                     "Это работы повышенной опасности , работы при недостаточном содержание кислорода (менее 25%) ,которой невозможно без участия человека"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Это работы повышенной опасности... Объяснение: Работы в замкнутом пространстве характеризуются повышенной опасностью и недостаточным содержанием кислорода (менее 20%)."
             },
             {
                 question: "При каких условиях запрещено проведение работа на высоте?",
@@ -618,7 +1169,9 @@
                     "Все вышеперечисленное.",
                     "При дожде"
                 ],
-                correct: 3
+                correct: 3,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Все вышеперечисленное. Объяснение: Работы на высоте запрещены при сильном ветре, обледенении, грозе и дожде. Эти условия создают повышенный риск для работников."
             },
             {
                 question: "Какое количество исполнителей должно быть при производстве земляных работ?",
@@ -627,7 +1180,9 @@
                     "Не менее 3-х человек",
                     "Не менее 4-х человек"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Не менее 2-х человек. Объяснение: При производстве земляных работ должно быть не менее двух исполнителей для взаимного контроля и оказания помощи в случае необходимости."
             },
             {
                 question: "На каком расстояние друг от друга должны двигаться транспортные средства при работах на льду и движение по ледовым переправам?",
@@ -636,14 +1191,18 @@
                     "Все транспортные средства двигаются в один ряд , расстояние между ними не менее 30 метров.",
                     "Все транспортные средства двигаются в один ряд , расстояние между ними не более 30 метров"
                 ],
-                correct: 1
+                correct: 1,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Все транспортные средства двигаются... Объяснение: При движении по ледовым переправам транспортные средства должны двигаться в один ряд с расстоянием не менее 30 метров между ними."
             },
             {
                 question: "Какие работы относятся к огневым работам?",
                 options: [
                     "Работы с применением открытого огня, искрообразованием и нагреванием до температуры воспламенения материалов и конструкций (электросварка, газосварка, бензино- и керосинорезательные работы, паяльные работы, механическая обработка металла с образованием искр и т. п.)."
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Работы с применением открытого огня... Объяснение: Огневые работы включают любые операции с использованием открытого огня, искр или нагрева до температур воспламенения материалов."
             },
             {
                 question: "Что должен оценить и знать работник перед проведением работ согласно золотых правил безопасности труда",
@@ -651,7 +1210,9 @@
                     "оценить существующие опасности и предпринять меры по исключению/снижению их воздействия, знать золотые правила безопасности труда.",
                     "Знать как правильно выполнить работу"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: оценить существующие опасности... Объяснение: Согласно золотым правилам безопасности, работник должен оценить риски и принять меры для их снижения, а также знать правила безопасности."
             },
             {
                 question: "С какой периодичностью оператор ПСКиПР должен проходить проверку знаний по основной профессии,инструктаж ,проверку знаний по электробезопасности?",
@@ -660,7 +1221,9 @@
                     "Работник должен проходить не реже 1 раза в пол года проверку знаний по основной профессии; инструктаж, проверку знаний по электробезопасности",
                     "Работник должен проходить не реже 1 раза в год проверку знаний по основной профессии; инструктаж, проверку знаний по электробезопасности."
                 ],
-                correct: 2
+                correct: 2,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Работник должен проходить не реже 1 раза в год... Объяснение: Периодичность проверки знаний для оператора ПСКиПР - не реже одного раза в год по основной профессии и электробезопасности."
             },
             {
                 question: "В каком документе отражены нормы бесплатной выдачи специальной одежды, специальной обуви и других средств индивидуальной защиты?",
@@ -669,7 +1232,9 @@
                     "В технологической инструкции",
                     "В локально-нормативной документации"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: В коллективном договоре. Объяснение: Нормы выдачи СИЗ отражаются в коллективном договоре организации, который является основным документом в этой сфере."
             },
             {
                 question: "Перечислите виды инструктажей?",
@@ -678,7 +1243,9 @@
                     "Вводный инструктаж, Целевой инструктаж, Внеплановый инструктаж",
                     "Вводный инструктаж, Первичный инструктаж, Повторный инструктаж, Внеплановый инструктаж, Целевой инструктаж"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Вводный инструктаж, Инструктаж на рабочем месте... Объяснение: Основные виды инструктажей: вводный (при приеме на работу), на рабочем месте (первичный, повторный, внеплановый), целевой (перед конкретными работами)."
             },
             {
                 question: "Какие лица допускаются к самостоятельной работе в качестве оператора ПСКиПР?",
@@ -686,7 +1253,9 @@
                     "не моложе 18 лет, умеет правильно выполнить работу, прошедшие обучение первой медицинской помощи",
                     "не моложе 18 лет, прошедшее предварительный и периодические медицинские осмотры, прошедшее обучение в области промышленной безопасности, охраны труда, безопасным методам и приемам выполнения работ."
                 ],
-                correct: 1
+                correct: 1,
+                category: "Безопасность",
+                explanation: "Правильный ответ: не моложе 18 лет, прошедшее предварительный... Объяснение: Требования к оператору ПСКиПР: возраст не менее 18 лет, медосмотры, обучение по промышленной безопасности и охране труда."
             },
             {
                 question: "Возникновение каких опасных и вредных производственных факторов возможно при отборе проб воздушной среды и при работе с газоанализатором?",
@@ -699,7 +1268,9 @@
                     "Ответ 1,3",
                     "Ответ 2,4"
                 ],
-                correct: 4
+                correct: 4,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Все вышеперечисленное. Объяснение: При отборе проб возможны все перечисленные факторы: экстремальные температуры, недостаточное освещение, загрязнение воздуха."
             },
             {
                 question: "В каких случаях оператор ПСКиПР должен пройти в обязательном порядке внеплановый и целевой инструктаж для допуска к проведению работ?",
@@ -708,7 +1279,9 @@
                     "перед проведением работ, выполнение которых допускается только под непрерывным контролем работодателя, работ повышенной опасности, перед выполнением работ на объектах повышенной опасности, погрузочно-разгрузочных работ, работ по уборке территорий, перед выполнением работ по ликвидации последствий чрезвычайных ситуаций, в иных случаях, установленных работодателем.",
                     "Все вышеперечисленное."
                 ],
-                correct: 2
+                correct: 2,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Все вышеперечисленное. Объяснение: Внеплановый инструктаж требуется при изменениях в работе, авариях, длительных перерывах. Целевой - перед работами повышенной опасности."
             },
             {
                 question: "На каком расстояние от дренажной емкости устанавливаются автомашина для откачки водонефтяной эмульсии?",
@@ -717,21 +1290,27 @@
                     "Установить спецагрегат на расстоянии менее 10 метров от дренажной емкости, убедиться в отсутствии пропусков газа на оборудовании и трубопроводах дренажной емкости",
                     "Установить спецагрегат на расстоянии 5 метров от дренажной емкости, убедиться в отсутствии пропусков газа на оборудовании и трубопроводах дренажной емкости"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Оборудование",
+                explanation: "Правильный ответ: Установить спецагрегат на расстоянии 10 метров... Объяснение: Безопасное расстояние для спецагрегата при откачке водонефтяной эмульсии - не менее 10 метров от дренажной емкости."
             },
             {
                 question: "Что необходимо проверить при обслуживание запорной арматуры?",
                 options: [
                     "состояние сварных швов запорной арматуры; плавность перемещения всех подвижных частей запорной арматуры; правильность сборки всех фланцевых присоединений, обращая внимание на равномерность затяжки шпилек и параллельность привалочных поверхностей"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Оборудование",
+                explanation: "Правильный ответ: состояние сварных швов запорной арматуры... Объяснение: При обслуживании запорной арматуры проверяют состояние сварных швов, плавность хода подвижных частей, правильность сборки фланцевых соединений."
             },
             {
                 question: "Какие меры безопасности необходимо соблюдать перед входом в загазованную зону?",
                 options: [
                     "исправность противогаза, тщательно осмотреть шланг, проверить прочность и надежность соединений всех частей противогаза по инструкции, прилагаемой к каждому комплекту ПШ; маска-шлем противогаза должна быть подобрана по размеру и плотно прилегать к лицу, не вызывая болевых ощущений."
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: исправность противогаза, тщательно осмотреть шланг... Объяснение: Перед входом в загазованную зону необходимо проверить исправность противогаза, состояние шланга и соединений, правильность подгонки маски."
             },
             {
                 question: "Какие противогазы используются при проведении газоопаных работ?",
@@ -740,7 +1319,9 @@
                     "Изолирующий противогаз",
                     "Шланговый противогаз."
                 ],
-                correct: 2
+                correct: 2,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Шланговый противогаз. Объяснение: При газоопасных работах используются шланговые противогазы, которые обеспечивают подачу чистого воздуха из незагазованной зоны."
             },
             {
                 question: "Какой период времени не должен превышать срок единовременного пребывания , работающего в шланговом противогазе?",
@@ -749,7 +1330,9 @@
                     "Срок единовременного пребывания работающего в шланговом противогазе не должен превышать 20 минут с последующим отдыхом не менее 15 минут",
                     "Срок единовременного пребывания работающего в шланговом противогазе не должен превышать 60 минут с последующим отдыхом не менее 15 минут"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Срок единовременного пребывания... Объяснение: Максимальное время непрерывной работы в шланговом противогазе - 30 минут с обязательным отдыхом не менее 15 минут."
             },
             {
                 question: "Когда проводится проверка исправности пояса и веревки работником?",
@@ -757,7 +1340,9 @@
                     "Исправность пояса и веревки должна проверяться работником каждый раз перед его применением, а ответственным лицом не реже 2 раза в декаду производить визуальный осмотр пояса и проверять его исправность: на поясе не должно быть повреждений; наконечник ремня должен свободно входить в прорезь язычка пряжки, а в случае разлохмачивания материала его нужно оплавить на огне спички и затереть; пружины карабина должны быть осмотрены, смазаны маслом и плотно прижата предохранительная чека к зеву крюка.",
                     "Исправность пояса и веревки должна проверяться работником каждый раз перед его применением, а ответственным лицом не реже 1 раза в декаду производить визуальный осмотр пояса и проверять его исправность"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Исправность пояса и веревки должна проверяться... Объяснение: Работник проверяет пояс перед каждым использованием, ответственное лицо - не реже 2 раз в декаду. Проверяют отсутствие повреждений, состояние пряжки и карабина."
             },
             {
                 question: "Какова периодичность осмотра съемных грузозахватных приспособлений и тары?",
@@ -766,7 +1351,9 @@
                     "1 раз в месяц, за исключением редко используемых; клещи, траверсы, другие захваты, тара - каждый месяц; редко используемые съемные грузозахватные приспособления - перед выдачей их в работу",
                     "1 раз в 10 дней, за исключением редко используемых; клещи, траверсы, другие захваты, тара - каждый месяц; редко используемые съемные грузозахватные приспособления - перед выдачей их в работу."
                 ],
-                correct: 2
+                correct: 2,
+                category: "Безопасность",
+                explanation: "Правильный ответ: 1 раз в 10 дней, за исключением редко используемых... Объяснение: Стропы осматривают каждые 10 дней, клещи и траверсы - ежемесячно, редко используемые приспособления - перед каждой выдачей."
             },
             {
                 question: "Какие съемные грузозахватные приспособления не допускаются к эксплуатации?",
@@ -775,7 +1362,9 @@
                     "отсутствует бирка (клеймо); деформированы коуши; имеются трещины на опрессовочных втулках; имеются смещения каната в заплетке или втулках, крюки не имеют предохранительных замков; имеются узлы, порезы, обрывы нитей стропов из синтетических лент на текстильной основе, повреждения лент от воздействия химических веществ; имеются повреждения на канатных и цепных съемных грузозахватных приспособлениях.",
                     "Нет правильного ответа"
                 ],
-                correct: 1
+                correct: 1,
+                category: "Безопасность",
+                explanation: "Правильный ответ: отсутствует бирка (клеймо); деформированы коуши... Объяснение: К эксплуатации не допускаются приспособления без маркировки, с дефектами коушей, трещинами на втулках, повреждениями стропов, отсутствием замков на крюках."
             },
             {
                 question: "При какой высоте груза работник может находится возле него при проведение погрузочно-разгрузочных работ?",
@@ -784,7 +1373,9 @@
                     "Работник может находиться возле груза во время его подъема или опускания, если груз поднят на высоту не более 1500 мм от уровня площадки, на которой стоит работник",
                     "Работник может находиться возле груза во время его подъема или опускания, если груз поднят на высоту не более 2000 мм от уровня площадки, на которой стоит работник"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Работник может находиться возле груза... Объяснение: Безопасное расстояние - работник может находиться у груза только если он поднят не выше 1000 мм от уровня площадки."
             },
             {
                 question: "На какую высоту должны быть подняты груз или грузозахватное приспособление при их горизонтальном перемещении?",
@@ -793,7 +1384,9 @@
                     "Груз или грузозахватное приспособление при их горизонтальном перемещении должны быть предварительно подняты на 500 мм выше встречающихся на пути предметов.",
                     "Груз или грузозахватное приспособление при их горизонтальном перемещении должны быть предварительно подняты на 1500 мм выше встречающихся на пути предметов"
                 ],
-                correct: 1
+                correct: 1,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Груз или грузозахватное приспособление... Объяснение: При горизонтальном перемещении груз должен быть поднят на 500 мм выше встречающихся препятствий для обеспечения безопасности."
             },
             {
                 question: "Разрешается ли подтаскивание грузов краном-манипулятором при наклоном положение грузовых канатов",
@@ -802,14 +1395,18 @@
                     "Разрешается",
                     "Разрешается еси это безопасно"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Не разрешается. Объяснение: Подтаскивание грузов краном-манипулятором при наклонном положении канатов запрещено, так как это создает риск обрыва канатов и падения груза."
             },
             {
                 question: "Разрешается еси это безопасно",
                 options: [
                     "Для строповки предназначенного к подъему груза должны применяться стропы, соответствующие массе и характеру поднимаемого груза с учетом числа ветвей и их угла наклона. Стропы общего назначения следует подбирать так, чтобы угол между их ветвями не превышал 90."
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Для строповки предназначенного к подъему груза... Объяснение: При строповке необходимо подбирать стропы по массе груза, учитывать угол между ветвями (не более 90 градусов) для обеспечения безопасности."
             },
             {
                 question: "Какие СИЗ применяются при работе с хим.реагентами?",
@@ -818,7 +1415,9 @@
                     "очки защитные, перчатки, фартук из ПВХ",
                     "очки защитные, резиновые перчатки, фартук из ПВХ, респиратор."
                 ],
-                correct: 2
+                correct: 2,
+                category: "Химия",
+                explanation: "Правильный ответ: очки защитные, резиновые перчатки... Объяснение: Полный комплект СИЗ при работе с химреагентами включает: защитные очки, резиновые перчатки, фартук из ПВХ и респиратор."
             },
             {
                 question: "Какие предупредительные и запрещающие знаки должны быть вывешены на БРХ?",
@@ -826,14 +1425,18 @@
                     "Огнеопасно», «Запрещается пользоваться открытым огнем», «Запрещается курить», «Осторожно! Легковоспламеняющаяся жидкость», «Осторожно! Ядовитое вещество!»",
                     "Огнеопасно», «Запрещается пользоваться открытым огнем», «Запрещается курить», «Осторожно! Легковоспламеняющаяся жидкость», «Осторожно! Ядовитое вещество!», а также табличка с указанием класса и категории взрывопожароопасности и указанием лица, ответственного за пожарную безопасность объекта."
                 ],
-                correct: 1
+                correct: 1,
+                category: "Безопасность",
+                explanation: "Правильный ответ: Огнеопасно», «Запрещается пользоваться открытым огнем»... Объяснение: На БРХ должны быть вывешены все перечисленные знаки плюс табличка с классом взрывопожароопасности и указанием ответственного за пожарную безопасность."
             },
             {
                 question: "Из какого материала должны быть выполнены пробоотборники?",
                 options: [
                     "Для крепления переносного пробоотборника используют гибкие, не дающие искр металлические тросики."
                 ],
-                correct: 0
+                correct: 0,
+                category: "Оборудование",
+                explanation: "Правильный ответ: Для крепления переносного пробоотборника... Объяснение: Пробоотборники должны крепиться гибкими металлическими тросиками, не дающими искр, для обеспечения безопасности во взрывоопасных средах."
             },
             {
                 question: "Что запрещается при отборе проб?",
@@ -841,7 +1444,9 @@
                     "запрещается отбор проб нефти или нефтепродукта из резервуара менее чем через 2 часа после окончания заполнения резервуара; запрещается проводить отбор проб химических реагентов без применения защитных очков; переносить стеклянную посуду с пробами в сумках-авоськах и полиэтиленовых пакетах; использовать стеклянную посуду при отборе проб горячих жидкостей; проводить отбор проб химических реагентов в темное время суток; производить отбор проб во время грозы и скорости ветра выше 12,5 м/с и более.",
                     "запрещается отбор проб нефти или нефтепродукта из резервуара менее чем через 3 часа после окончания заполнения резервуара; запрещается проводить отбор проб химических реагентов без применения защитных очков; переносить стеклянную посуду с пробами в сумках-авоськах и полиэтиленовых пакетах; использовать стеклянную посуду при отборе проб горячих жидкостей; проводить отбор проб химических реагентов в темное время суток; производить отбор проб во время грозы и скорости ветра выше 10 м/с и более"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: запрещается отбор проб нефти или нефтепродукта... Объяснение: Запрещено отбирать пробы в течение 2 часов после заполнения резервуара, без защитных очков, в ненадежной таре, при неблагоприятных погодных условиях."
             },
             {
                 question: "Каким способом осуществляется доставка и перевозка проб химических реагентов?",
@@ -849,14 +1454,18 @@
                     "Доставка и перевозка проб химических реагентов и нефтепродуктов должна осуществляться в грузовых отсеках спецтранспорта, в ящиках. При перевозке должны быть приняты меры по исключению их самопроизвольного перемещения в кузове автомобиля.",
                     "Доставка и перевозка проб химических реагентов и нефтепродуктов должна осуществляться в грузовых отсеках спецтранспорта. При перевозке должны быть приняты меры по исключению их самопроизвольного перемещения в кузове автомобиля"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Химия",
+                explanation: "Правильный ответ: Доставка и перевозка проб химических реагентов... Объяснение: Пробы должны перевозиться в спецтранспорте в ящиках с мерами по предотвращению перемещения для обеспечения безопасности."
             },
             {
                 question: "Какие требования необходимо соблюдать при отборе проб химических реагентов и нефтепродуктов с емкостей (резервуаров)?",
                 options: [
                     "Отбор проб химических реагентов и нефтепродуктов из резервуаров, цистерн, емкостей и из трубопроводов необходимо производить стоя с наветренной стороны (спиной к ветру), во избежание вдыхания паров нефти и газа."
                 ],
-                correct: 0
+                correct: 0,
+                category: "Химия",
+                explanation: "Правильный ответ: Отбор проб химических реагентов и нефтепродуктов... Объяснение: При отборе проб необходимо стоять с наветренной стороны, чтобы избежать вдыхания опасных паров и газов."
             },
             {
                 question: "Какие требования необходимо соблюдать при расстановке спецтехники на месте производства по сбору из скважин и регенерации растворов на основе кальциевых солей (CaCl2, триасалт ст, ниткал, нитрат кальция)?",
@@ -864,14 +1473,18 @@
                     "агрегаты устанавливаются кабинами от устья скважины; передвижные насосные установки и автоцистерны - не менее 15 м от устья скважины; передвижные компрессоры, передвижная поровая установка (ППУ), агрегат депарафинизации передвижной, модернизированный (АДПМ), и т.д. - не менее 25 м от устья скважины и 15 м от другого оборудования",
                     "агрегаты устанавливаются кабинами от устья скважины; передвижные насосные установки и автоцистерны - не менее 10 м от устья скважины; передвижные компрессоры, передвижная поровая установка (ППУ), агрегат депарафинизации передвижной, модернизированный (АДПМ), и т.д. - не менее 25 м от устья скважины и 10 м от другого оборудования."
                 ],
-                correct: 1
+                correct: 1,
+                category: "Оборудование",
+                explanation: "Правильный ответ: агрегаты устанавливаются кабинами от устья скважины... Объяснение: Требования к расстановке техники: агрегаты - кабинами от устья, насосные установки и автоцистерны - не менее 10 м, компрессоры и ППУ - не менее 25 м от устья и 10 м от другого оборудования."
             },
             {
                 question: "Какие требования предъявляються к поступающим хим. реагентом , материалом для приготовления жидкостей глушения скважин?",
                 options: [
                     "Поступающие химические реагенты и материалы для приготовления жидкостей глушения скважин должны быть в исправной упаковке, таре, иметь ярлыки, бирки или наклейки с точным наименованием, трафареты, маркировку, сопроводительные документы, паспорт безопасности. Места хранения должны иметь знаки опасности."
                 ],
-                correct: 0
+                correct: 0,
+                category: "Химия",
+                explanation: "Правильный ответ: Поступающие химические реагенты и материалы... Объяснение: Химреагенты должны поступать в исправной таре с полной маркировкой, сопроводительными документами и паспортом безопасности. Места хранения должны иметь знаки опасности."
             },
             {
                 question: "Какие химические реагенты, соли применяются на соле-растворных узлах канадского производства в процессах приготовления технологической жидкости глушения?",
@@ -879,7 +1492,9 @@
                     "Хлористый натрий (NaCL), Калий хлористый (KCL), Хлористый кальций (СаСL2), Нитрат кальция, Соль.",
                     "Гидрофобизатор ГФ-1, Сонкор 9027, Загуститель-структурообразователь BIOPOL, Ипроден С-2"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Химия",
+                explanation: "Правильный ответ: Хлористый натрий (NaCL), Калий хлористый (KCL)... Объяснение: На солевых узлах применяются хлористые соли натрия, калия, кальция, нитрат кальция и поваренная соль для приготовления технологических жидкостей."
             },
             {
                 question: "Что обязан работник перед запуском транспортной ленты?",
@@ -887,7 +1502,9 @@
                     "Перед запуском транспортерной ленты работник производит её визуальный осмотр на предмет наличия дефектов (механических повреждений, разрыв, прилегания транспортерной ленты к роликам и барабану, отсутствия провисания). При обнаружении неисправности немедленно сообщить непосредственному руководителю.",
                     "Перед запуском транспортерной ленты работник производит её визуальный осмотр на предмет наличия дефектов (механических повреждений, разрыв, прилегания транспортерной ленты к роликам и барабану, отсутствия провисания"
                 ],
-                correct: 0
+                correct: 0,
+                category: "Оборудование",
+                explanation: "Правильный ответ: Перед запуском транспортерной ленты работник производит... Объяснение: Перед запуском ленты необходимо провести визуальный осмотр на наличие повреждений, правильность прилегания к роликам и отсутствие провисания. При обнаружении дефектов - сообщить руководителю."
             },
             {
                 question: "Что обязан работник при обслуживании оборудования(задвижек,насосов)?",
@@ -895,42 +1512,54 @@
                     "Перед началом работ по разборке или техническому обслуживанию оборудования (задвижек, насосов) необходимо: отключить электропитание оборудования и принять меры по исключению его подачи на время производства работ; если оборудование нагрето, дать время на то, чтобы оно остыло",
                     "Перед началом выполнения ремонтных работ или технического обслуживания, работник должен перекрыть трубопроводы линий перекачки и линий подачи воды, после чего стравить давление на нагнетательной линии. Перед началом работ по разборке или техническому обслуживанию оборудования (задвижек, насосов) необходимо: отключить электропитание оборудования и принять меры по исключению его подачи на время производства работ; если оборудование нагрето, дать время на то, чтобы оно остыло."
                 ],
-                correct: 1
+                correct: 1,
+                category: "Оборудование",
+                explanation: "Правильный ответ: Перед началом выполнения ремонтных работ... Объяснение: При обслуживании оборудования необходимо: перекрыть трубопроводы, стравить давление, отключить электропитание, дать оборудованию остыть."
             },
             {
                 question: "Какие документы предъявляются к АЦ для налива технологической жидкости ИНЭР и БСГ?",
                 options: [
                     "при наличии паспорта тарировки цистерны, акта пропарки, талона на отпуск, плана работ на ИНЭР и БСГ."
                 ],
-                correct: 0
+                correct: 0,
+                category: "Безопасность",
+                explanation: "Правильный ответ: при наличии паспорта тарировки цистерны... Объяснение: Для налива технологической жидкости необходимы: паспорт тарировки цистерны, акт пропарки, талон на отпуск и план работ."
             },
             {
                 question: "Какие требования предусматривается к емкостям на эстакаде?",
                 options: [
                     "Емкости на эстакаде должны быть оборудованы: запорной арматурой для слива раствора; замерным устройством для контроля за расходом и наличием жидкости."
                 ],
-                correct: 0
+                correct: 0,
+                category: "Оборудование",
+                explanation: "Правильный ответ: Емкости на эстакаде должны быть оборудованы... Объяснение: Емкости на эстакаде должны иметь запорную арматуру для слива и замерное устройство для контроля уровня и расхода жидкости."
             },
             {
                 question: "Что обязан сделать работник перед пуском насоса миксера приготовления раствора?",
                 options: [
                     "Перед пуском насоса необходимо сделать следующее: удалить с насоса все посторонние предметы; проверить, нет ли поврежденных частей насоса; проверить исправность манометра на трубопроводе нагнетания насоса; убедиться в наличии заземления насоса и электродвигателя; убедиться в исправном состоянии трубопроводов; убедиться в исправном состоянии предохранительных и ограждающих устройств; проверить правильность направления вращения кратковременным пуском насоса."
                 ],
-                correct: 0
+                correct: 0,
+                category: "Оборудование",
+                explanation: "Правильный ответ: Перед пуском насоса необходимо сделать следующее... Объяснение: Перед пуском насоса необходимо проверить отсутствие посторонних предметов, исправность частей и манометра, наличие заземления, состояние трубопроводов и ограждений, направление вращения."
             },
             {
                 question: "Для чего предназначены ингибитор солеотложения?",
                 options: [
                     "Ингибиторы солеотложения - предназначены для предотвращения отложений труднорастворимых солей кальция, магния, бария, стронция и железа."
                 ],
-                correct: 0
+                correct: 0,
+                category: "Химия",
+                explanation: "Правильный ответ: Ингибиторы солеотложения - предназначены... Объяснение: Ингибиторы солеотложения предотвращают образование отложений солей кальция, магния, бария, стронция и железа в оборудовании."
             },
             {
                 question: "Для чего предназначен ингибитор коррозии?",
                 options: [
                     "Ингибиторы коррозии предназначены для защиты от коррозии напорных и выкидных трубопроводов, транспортирующих обводненные газожидкостные и нефтяные среды, содержащие сероводород и углекислый газ."
                 ],
-                correct: 0
+                correct: 0,
+                category: "Химия",
+                explanation: "Правильный ответ: Ингибиторы коррозии предназначены... Объяснение: Ингибиторы коррозии защищают трубопроводы от коррозионного воздействия обводненных сред, содержащих сероводород и углекислый газ."
             },
             {
                 question: "Какие основные неисправности ручного бочкового насоса и их причины?",
@@ -942,7 +1571,9 @@
                     "Всё вышеперечисленное.",
                     "Ответ 1,2,3"
                 ],
-                correct: 4
+                correct: 4,
+                category: "Оборудование",
+                explanation: "Правильный ответ: Всё вышеперечисленное. Объяснение: Основные неисправности ручного насоса: отсутствие жидкости во всасывающей полости, попадание воздуха, большая высота всасывания, неплотности в линии, износ сальниковых колец, засорение каналов."
             }
         ];
         
@@ -954,6 +1585,15 @@
         let examTimeLeft = 30 * 60; // 30 минут в секундах
         let userAnswers = [];
         let ticketSize;
+        let hintsRemaining = 3;
+        let favorites = [];
+        let incorrectAnswers = [];
+        let currentFavoritesIndex = 0;
+        let currentTrainerIndex = 0;
+        let currentCardIndex = 0;
+        let searchResults = [];
+        let currentCategory = 'all';
+        let progressChart = null;
         
         // Показать экран
         function showScreen(screenId) {
@@ -966,15 +1606,219 @@
         // Вернуться в начало
         function backToStart() {
             clearInterval(examTimer);
+            loadStats();
+            updateAchievements();
             showScreen('startScreen');
+        }
+        
+        // Сохранение данных в localStorage
+        function saveData() {
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            localStorage.setItem('incorrectAnswers', JSON.stringify(incorrectAnswers));
+            localStorage.setItem('trainingProgress', JSON.stringify({
+                currentIndex: currentTrainingIndex,
+                hintsRemaining: hintsRemaining
+            }));
+            localStorage.setItem('darkTheme', document.body.classList.contains('dark-theme'));
+        }
+        
+        // Загрузка данных из localStorage
+        function loadData() {
+            const savedFavorites = localStorage.getItem('favorites');
+            if (savedFavorites) {
+                favorites = JSON.parse(savedFavorites);
+            }
+            
+            const savedIncorrect = localStorage.getItem('incorrectAnswers');
+            if (savedIncorrect) {
+                incorrectAnswers = JSON.parse(savedIncorrect);
+            }
+            
+            const savedProgress = localStorage.getItem('trainingProgress');
+            if (savedProgress) {
+                const progress = JSON.parse(savedProgress);
+                currentTrainingIndex = progress.currentIndex || 0;
+                hintsRemaining = progress.hintsRemaining || 3;
+            }
+            
+            const savedTheme = localStorage.getItem('darkTheme');
+            if (savedTheme === 'true') {
+                document.body.classList.add('dark-theme');
+                document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        }
+        
+        // Сохранение статистики экзамена
+        function saveExamStats(percentage, timeSpent, questionCount) {
+            const stats = JSON.parse(localStorage.getItem('examStats') || '[]');
+            stats.push({
+                date: new Date().toISOString(),
+                percentage: percentage,
+                timeSpent: timeSpent,
+                questionCount: questionCount
+            });
+            localStorage.setItem('examStats', JSON.stringify(stats));
+        }
+        
+        // Загрузка статистики
+        function loadStats() {
+            const stats = JSON.parse(localStorage.getItem('examStats') || '[]');
+            const statsList = document.getElementById('statsList');
+            
+            if (stats.length === 0) {
+                statsList.innerHTML = '<div class="no-stats">Нет результатов экзаменов</div>';
+                updateProgressChart([]);
+                return;
+            }
+            
+            statsList.innerHTML = '';
+            stats.slice(-5).reverse().forEach(stat => {
+                const date = new Date(stat.date);
+                const dateStr = `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+                
+                let resultClass = '';
+                if (stat.percentage >= 90) resultClass = 'excellent';
+                else if (stat.percentage >= 70) resultClass = 'good';
+                else if (stat.percentage >= 50) resultClass = 'satisfactory';
+                else resultClass = 'failed';
+                
+                const minutes = Math.floor(stat.timeSpent / 60);
+                const seconds = stat.timeSpent % 60;
+                const timeStr = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                const statsItem = document.createElement('div');
+                statsItem.className = 'stats-item';
+                statsItem.innerHTML = `
+                    <div class="stats-date">${dateStr}</div>
+                    <div class="stats-result ${resultClass}">${stat.percentage}% (${stat.questionCount} вопросов, ${timeStr})</div>
+                `;
+                statsList.appendChild(statsItem);
+            });
+            
+            updateProgressChart(stats);
+        }
+        
+        // Обновление графика прогресса
+        function updateProgressChart(stats) {
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            
+            if (progressChart) {
+                progressChart.destroy();
+            }
+            
+            if (stats.length === 0) {
+                return;
+            }
+            
+            const labels = stats.map(stat => {
+                const date = new Date(stat.date);
+                return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+            });
+            
+            const data = stats.map(stat => stat.percentage);
+            
+            progressChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Результат экзамена (%)',
+                        data: data,
+                        backgroundColor: 'rgba(26, 42, 108, 0.2)',
+                        borderColor: 'rgba(26, 42, 108, 1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Обновление достижений
+        function updateAchievements() {
+            const stats = JSON.parse(localStorage.getItem('examStats') || '[]');
+            const totalQuestions = favorites.length + incorrectAnswers.length;
+            
+            // Достижение 1: Новичок (пройден первый экзамен)
+            if (stats.length > 0) {
+                document.getElementById('achievement1').classList.remove('locked');
+            }
+            
+            // Достижение 2: Стремительный (экзамен пройден быстрее чем за 15 минут)
+            const fastExam = stats.some(stat => stat.timeSpent < 15 * 60);
+            if (fastExam) {
+                document.getElementById('achievement2').classList.remove('locked');
+            }
+            
+            // Достижение 3: Эксперт (5 экзаменов с результатом 90% и выше)
+            const excellentExams = stats.filter(stat => stat.percentage >= 90).length;
+            if (excellentExams >= 5) {
+                document.getElementById('achievement3').classList.remove('locked');
+            }
+            
+            // Достижение 4: Мастер (более 20 избранных вопросов)
+            if (favorites.length >= 20) {
+                document.getElementById('achievement4').classList.remove('locked');
+            }
+        }
+        
+        // Переключение темы
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            document.getElementById('themeToggle').innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            saveData();
         }
         
         // Начать режим обучения
         function startTraining() {
-            currentTrainingIndex = 0;
+            loadData();
             userAnswers = [];
             showScreen('trainingScreen');
+            updateHintInfo();
+            updateFavoriteButton();
             showTrainingQuestion();
+        }
+        
+        // Обновить информацию о подсказках
+        function updateHintInfo() {
+            document.getElementById('hintInfo').textContent = `Подсказок осталось: ${hintsRemaining}`;
+            document.getElementById('hintBtn').disabled = hintsRemaining <= 0;
+        }
+        
+        // Обновить кнопку избранного
+        function updateFavoriteButton() {
+            const questionIndex = currentTrainingIndex;
+            const isFavorite = favorites.includes(questionIndex);
+            const btn = document.getElementById('favoriteBtn');
+            
+            if (isFavorite) {
+                btn.textContent = 'Удалить из избранного';
+                btn.classList.add('active');
+            } else {
+                btn.textContent = 'Добавить в избранное';
+                btn.classList.remove('active');
+            }
         }
         
         // Показать вопрос в режиме обучения
@@ -983,6 +1827,7 @@
                 backToStart();
                 return;
             }
+            
             const question = questions[currentTrainingIndex];
             document.getElementById('trainingQuestion').textContent = question.question;
             
@@ -994,26 +1839,108 @@
                 optionElement.className = 'option';
                 optionElement.textContent = option;
                 optionElement.onclick = () => selectTrainingOption(index);
+                optionElement.dataset.index = index;
                 optionsContainer.appendChild(optionElement);
             });
             
             // Обновить прогресс
             const progress = ((currentTrainingIndex + 1) / questions.length) * 100;
             document.getElementById('trainingProgress').style.width = `${progress}%`;
+            
+            // Обновить кнопку избранного
+            updateFavoriteButton();
+            
+            // Скрыть объяснение
+            document.getElementById('trainingExplanation').classList.remove('show');
+        }
+        
+        // Использовать подсказку
+        function useHint() {
+            if (hintsRemaining <= 0) return;
+            
+            const question = questions[currentTrainingIndex];
+            const options = document.querySelectorAll('#trainingOptions .option');
+            
+            // Найти все неправильные варианты
+            const incorrectOptions = [];
+            for (let i = 0; i < options.length; i++) {
+                if (i !== question.correct) {
+                    incorrectOptions.push(i);
+                }
+            }
+            
+            // Удалить один случайный неправильный вариант
+            if (incorrectOptions.length > 0) {
+                const randomIndex = Math.floor(Math.random() * incorrectOptions.length);
+                const optionToRemove = incorrectOptions[randomIndex];
+                options[optionToRemove].style.display = 'none';
+                options[optionToRemove].classList.add('disabled');
+            }
+            
+            hintsRemaining--;
+            updateHintInfo();
+            saveData();
+        }
+        
+        // Переключить избранное
+        function toggleFavorite() {
+            const questionIndex = currentTrainingIndex;
+            const index = favorites.indexOf(questionIndex);
+            
+            if (index === -1) {
+                favorites.push(questionIndex);
+            } else {
+                favorites.splice(index, 1);
+            }
+            
+            updateFavoriteButton();
+            saveData();
         }
         
         // Выбор ответа в режиме обучения
         function selectTrainingOption(optionIndex) {
+            const question = questions[currentTrainingIndex];
+            const options = document.querySelectorAll('#trainingOptions .option');
+            
+            // Отключить все варианты
+            options.forEach(opt => {
+                opt.onclick = null;
+                opt.classList.add('disabled');
+            });
+            
+            // Подсветить выбранный вариант
+            options[optionIndex].classList.add(optionIndex === question.correct ? 'correct' : 'incorrect');
+            
+            // Если ответ неверный, подсветить правильный
+            if (optionIndex !== question.correct) {
+                options[question.correct].classList.add('correct');
+                
+                // Добавить в список неправильных ответов
+                if (!incorrectAnswers.includes(currentTrainingIndex)) {
+                    incorrectAnswers.push(currentTrainingIndex);
+                }
+            }
+            
+            // Показать объяснение
+            const explanationElement = document.getElementById('trainingExplanation');
+            explanationElement.textContent = question.explanation;
+            explanationElement.classList.add('show');
+            
+            // Сохранить ответ
             userAnswers.push({
                 questionIndex: currentTrainingIndex,
                 selectedOption: optionIndex,
-                isCorrect: optionIndex === questions[currentTrainingIndex].correct
+                isCorrect: optionIndex === question.correct
             });
             
+            // Сохранить прогресс
+            saveData();
+            
+            // Переход к следующему вопросу
             currentTrainingIndex++;
             setTimeout(() => {
                 showTrainingQuestion();
-            }, 300);
+            }, 3000);
         }
         
         // Начать экзамен
@@ -1057,6 +1984,7 @@
                 finishExam();
                 return;
             }
+            
             const question = examQuestions[currentExamIndex];
             document.getElementById('examQuestion').textContent = question.question;
             
@@ -1074,20 +2002,53 @@
             // Обновить прогресс
             const progress = ((currentExamIndex + 1) / examQuestions.length) * 100;
             document.getElementById('examProgress').style.width = `${progress}%`;
+            
+            // Скрыть объяснение
+            document.getElementById('examExplanation').classList.remove('show');
         }
         
         // Выбор ответа в режиме экзамена
         function selectExamOption(optionIndex) {
+            const question = examQuestions[currentExamIndex];
+            const options = document.querySelectorAll('#examOptions .option');
+            
+            // Отключить все варианты
+            options.forEach(opt => {
+                opt.onclick = null;
+                opt.classList.add('disabled');
+            });
+            
+            // Подсветить выбранный вариант
+            options[optionIndex].classList.add(optionIndex === question.correct ? 'correct' : 'incorrect');
+            
+            // Если ответ неверный, подсветить правильный
+            if (optionIndex !== question.correct) {
+                options[question.correct].classList.add('correct');
+                
+                // Добавить в список неправильных
+                const originalIndex = questions.indexOf(question);
+                if (!incorrectAnswers.includes(originalIndex)) {
+                    incorrectAnswers.push(originalIndex);
+                    saveData();
+                }
+            }
+            
+            // Показать объяснение
+            const explanationElement = document.getElementById('examExplanation');
+            explanationElement.textContent = question.explanation;
+            explanationElement.classList.add('show');
+            
+            // Сохранить ответ
             userAnswers.push({
                 questionIndex: currentExamIndex,
                 selectedOption: optionIndex,
-                isCorrect: optionIndex === examQuestions[currentExamIndex].correct
+                isCorrect: optionIndex === question.correct
             });
             
             currentExamIndex++;
             setTimeout(() => {
                 showExamQuestion();
-            }, 300);
+            }, 1500);
         }
         
         // Завершить экзамен
@@ -1097,6 +2058,10 @@
             // Подсчет правильных ответов
             const correctAnswers = userAnswers.filter(answer => answer.isCorrect).length;
             const percentage = Math.round((correctAnswers / examQuestions.length) * 100);
+            
+            // Сохранить статистику
+            const timeSpent = 30 * 60 - examTimeLeft;
+            saveExamStats(percentage, timeSpent, examQuestions.length);
             
             // Показать результаты
             showScreen('resultScreen');
@@ -1115,6 +2080,297 @@
             
             document.getElementById('resultMessage').textContent = message;
         }
+        
+        // Начать режим избранных вопросов
+        function startFavorites() {
+            loadData();
+            
+            if (favorites.length === 0) {
+                alert('У вас нет избранных вопросов');
+                return;
+            }
+            
+            currentFavoritesIndex = 0;
+            userAnswers = [];
+            showScreen('favoritesScreen');
+            document.getElementById('favoritesCount').textContent = favorites.length;
+            showFavoritesQuestion();
+        }
+        
+        // Показать избранный вопрос
+        function showFavoritesQuestion() {
+            if (currentFavoritesIndex >= favorites.length) {
+                backToStart();
+                return;
+            }
+            
+            const questionIndex = favorites[currentFavoritesIndex];
+            const question = questions[questionIndex];
+            document.getElementById('favoritesQuestion').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('favoritesOptions');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.onclick = () => selectFavoritesOption(index);
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Обновить прогресс
+            const progress = ((currentFavoritesIndex + 1) / favorites.length) * 100;
+            document.getElementById('favoritesProgress').style.width = `${progress}%`;
+            
+            // Скрыть объяснение
+            document.getElementById('favoritesExplanation').classList.remove('show');
+        }
+        
+        // Выбор ответа в режиме избранных вопросов
+        function selectFavoritesOption(optionIndex) {
+            const questionIndex = favorites[currentFavoritesIndex];
+            const question = questions[questionIndex];
+            const options = document.querySelectorAll('#favoritesOptions .option');
+            
+            // Отключить все варианты
+            options.forEach(opt => {
+                opt.onclick = null;
+                opt.classList.add('disabled');
+            });
+            
+            // Подсветить выбранный вариант
+            options[optionIndex].classList.add(optionIndex === question.correct ? 'correct' : 'incorrect');
+            
+            // Если ответ неверный, подсветить правильный
+            if (optionIndex !== question.correct) {
+                options[question.correct].classList.add('correct');
+            }
+            
+            // Показать объяснение
+            const explanationElement = document.getElementById('favoritesExplanation');
+            explanationElement.textContent = question.explanation;
+            explanationElement.classList.add('show');
+            
+            // Сохранить ответ
+            userAnswers.push({
+                questionIndex: questionIndex,
+                selectedOption: optionIndex,
+                isCorrect: optionIndex === question.correct
+            });
+            
+            // Переход к следующему вопросу
+            currentFavoritesIndex++;
+            setTimeout(() => {
+                showFavoritesQuestion();
+            }, 2000);
+        }
+        
+        // Начать режим тренажера
+        function startTrainer() {
+            loadData();
+            
+            if (incorrectAnswers.length === 0) {
+                alert('У вас нет вопросов с ошибками');
+                return;
+            }
+            
+            currentTrainerIndex = 0;
+            userAnswers = [];
+            showScreen('trainerScreen');
+            document.getElementById('trainerCount').textContent = incorrectAnswers.length;
+            showTrainerQuestion();
+        }
+        
+        // Показать вопрос в режиме тренажера
+        function showTrainerQuestion() {
+            if (currentTrainerIndex >= incorrectAnswers.length) {
+                // Очистить список ошибок после успешного прохождения
+                incorrectAnswers = [];
+                saveData();
+                backToStart();
+                return;
+            }
+            
+            const questionIndex = incorrectAnswers[currentTrainerIndex];
+            const question = questions[questionIndex];
+            document.getElementById('trainerQuestion').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('trainerOptions');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.onclick = () => selectTrainerOption(index);
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Обновить прогресс
+            const progress = ((currentTrainerIndex + 1) / incorrectAnswers.length) * 100;
+            document.getElementById('trainerProgress').style.width = `${progress}%`;
+            
+            // Скрыть объяснение
+            document.getElementById('trainerExplanation').classList.remove('show');
+        }
+        
+        // Выбор ответа в режиме тренажера
+        function selectTrainerOption(optionIndex) {
+            const questionIndex = incorrectAnswers[currentTrainerIndex];
+            const question = questions[questionIndex];
+            const options = document.querySelectorAll('#trainerOptions .option');
+            
+            // Отключить все варианты
+            options.forEach(opt => {
+                opt.onclick = null;
+                opt.classList.add('disabled');
+            });
+            
+            // Подсветить выбранный вариант
+            options[optionIndex].classList.add(optionIndex === question.correct ? 'correct' : 'incorrect');
+            
+            // Если ответ неверный, подсветить правильный
+            if (optionIndex !== question.correct) {
+                options[question.correct].classList.add('correct');
+            }
+            
+            // Показать объяснение
+            const explanationElement = document.getElementById('trainerExplanation');
+            explanationElement.textContent = question.explanation;
+            explanationElement.classList.add('show');
+            
+            // Сохранить ответ
+            userAnswers.push({
+                questionIndex: questionIndex,
+                selectedOption: optionIndex,
+                isCorrect: optionIndex === question.correct
+            });
+            
+            // Если ответ правильный, удалить вопрос из списка ошибок
+            if (optionIndex === question.correct) {
+                incorrectAnswers.splice(currentTrainerIndex, 1);
+                saveData();
+            } else {
+                currentTrainerIndex++;
+            }
+            
+            // Переход к следующему вопросу
+            setTimeout(() => {
+                showTrainerQuestion();
+            }, 2000);
+        }
+        
+        // Начать режим поиска
+        function startSearch() {
+            showScreen('searchScreen');
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').innerHTML = '<div class="no-stats">Введите ключевые слова для поиска</div>';
+        }
+        
+        // Поиск вопросов
+        function searchQuestions() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                document.getElementById('searchResults').innerHTML = '<div class="no-stats">Введите ключевые слова для поиска</div>';
+                return;
+            }
+            
+            // Фильтрация вопросов по поисковому запросу и категории
+            searchResults = questions.filter(question => {
+                const matchesSearch = question.question.toLowerCase().includes(searchTerm) || 
+                                    question.options.some(option => option.toLowerCase().includes(searchTerm));
+                const matchesCategory = currentCategory === 'all' || question.category === currentCategory;
+                return matchesSearch && matchesCategory;
+            });
+            
+            displaySearchResults();
+        }
+        
+        // Отображение результатов поиска
+        function displaySearchResults() {
+            const resultsContainer = document.getElementById('searchResults');
+            
+            if (searchResults.length === 0) {
+                resultsContainer.innerHTML = '<div class="no-stats">Ничего не найдено</div>';
+                return;
+            }
+            
+            resultsContainer.innerHTML = '';
+            
+            searchResults.forEach((question, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-container';
+                questionElement.innerHTML = `
+                    <div class="question">${index + 1}. ${question.question}</div>
+                    <div class="options">
+                        ${question.options.map((option, i) => `
+                            <div class="option ${i === question.correct ? 'correct' : ''}">${option}</div>
+                        `).join('')}
+                    </div>
+                    <div class="explanation">${question.explanation}</div>
+                `;
+                resultsContainer.appendChild(questionElement);
+            });
+        }
+        
+        // Фильтрация по категориям
+        function filterByCategory(category) {
+            currentCategory = category;
+            
+            // Обновление активной кнопки
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Повторный поиск с новой категорией
+            searchQuestions();
+        }
+        
+        // Начать режим карточек
+        function startCards() {
+            currentCardIndex = 0;
+            showScreen('cardsScreen');
+            document.getElementById('cardBtn').textContent = 'Далее';
+            showCard();
+        }
+        
+        // Показать карточку
+        function showCard() {
+            if (currentCardIndex >= questions.length) {
+                currentCardIndex = 0;
+            }
+            
+            const question = questions[currentCardIndex];
+            document.getElementById('cardQuestion').textContent = question.question;
+            document.getElementById('cardAnswer').textContent = question.options[question.correct];
+            document.getElementById('cardAnswer').classList.remove('show');
+        }
+        
+        // Следующая карточка
+        function nextCard() {
+            const answerElement = document.getElementById('cardAnswer');
+            
+            if (!answerElement.classList.contains('show')) {
+                // Показать ответ
+                answerElement.classList.add('show');
+                document.getElementById('cardBtn').textContent = 'Далее';
+            } else {
+                // Перейти к следующей карточке
+                currentCardIndex++;
+                document.getElementById('cardBtn').textContent = 'Далее';
+                showCard();
+            }
+        }
+        
+        // Инициализация при загрузке страницы
+        window.onload = function() {
+            loadData();
+            loadStats();
+            updateAchievements();
+        };
     </script>
 </body>
 </html>
