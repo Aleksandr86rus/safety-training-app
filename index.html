@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Подготовка по технике безопасности</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -14,22 +13,24 @@
         }
         
         :root {
-            --primary-color: #1a2a6c;
-            --secondary-color: #b21f1f;
-            --accent-color: #fdbb2d;
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #f39c12;
             --text-color: #333;
-            --bg-color: #f5f5f5;
+            --bg-color: #f8f9fa;
             --card-bg: #ffffff;
             --border-color: #e0e0e0;
-            --success-color: #28a745;
+            --success-color: #2ecc71;
             --warning-color: #f39c12;
-            --danger-color: #dc3545;
+            --danger-color: #e74c3c;
+            --education-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --education-card: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         }
         
         body.dark-theme {
-            --primary-color: #4a6bdf;
-            --secondary-color: #e74c3c;
-            --accent-color: #f1c40f;
+            --primary-color: #4a90e2;
+            --secondary-color: #27ae60;
+            --accent-color: #e67e22;
             --text-color: #e0e0e0;
             --bg-color: #1a1a1a;
             --card-bg: #2d2d2d;
@@ -37,10 +38,12 @@
             --success-color: #2ecc71;
             --warning-color: #f39c12;
             --danger-color: #e74c3c;
+            --education-bg: linear-gradient(135deg, #434343 0%, #000000 100%);
+            --education-card: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
         }
         
         body {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            background: var(--education-bg);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -49,19 +52,36 @@
             color: var(--text-color);
             overflow-x: hidden;
             transition: background 0.3s ease;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 15%);
+            background-size: 200px 200px;
+            pointer-events: none;
         }
         
         .container {
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             width: 100%;
             max-width: 800px;
-            padding: 20px;
+            padding: 30px;
             position: relative;
             overflow: hidden;
             background-color: var(--card-bg);
             transition: background-color 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .container::before {
@@ -70,32 +90,55 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 10px;
+            height: 8px;
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
         }
         
         h1 {
             text-align: center;
             color: var(--primary-color);
-            margin-bottom: 20px;
-            font-size: 1.8rem;
+            margin-bottom: 25px;
+            font-size: 2.2rem;
             line-height: 1.2;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
         }
         
         .theme-toggle {
             position: absolute;
             top: 15px;
             right: 15px;
-            background: none;
+            background: rgba(255, 255, 255, 0.2);
             border: none;
             color: var(--text-color);
             font-size: 1.5rem;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
         }
         
         .theme-toggle:hover {
             transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
         }
         
         .screen {
@@ -113,7 +156,7 @@
         }
         
         .btn {
-            background: linear-gradient(45deg, var(--primary-color), #2c3e50);
+            background: linear-gradient(45deg, var(--primary-color), #2980b9);
             color: white;
             border: none;
             padding: 18px 25px;
@@ -129,20 +172,45 @@
             margin-left: auto;
             margin-right: auto;
             text-align: center;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            transform: translateX(0);
         }
         
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(45deg, #2c3e50, var(--primary-color));
+            background: linear-gradient(45deg, #2980b9, var(--primary-color));
+        }
+        
+        .btn i {
+            margin-right: 8px;
         }
         
         .btn-exam {
-            background: linear-gradient(45deg, var(--secondary-color), #e74c3c);
+            background: linear-gradient(45deg, var(--danger-color), #c0392b);
         }
         
         .btn-exam:hover {
-            background: linear-gradient(45deg, #e74c3c, var(--secondary-color));
+            background: linear-gradient(45deg, #c0392b, var(--danger-color));
         }
         
         .btn-hint {
@@ -163,14 +231,14 @@
         }
         
         .btn-favorite {
-            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
             font-size: 0.9rem;
             padding: 12px 20px;
             max-width: 200px;
         }
         
         .btn-favorite:hover {
-            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
         }
         
         .btn-favorite.active {
@@ -212,20 +280,39 @@
         }
         
         .question-container {
-            background: var(--bg-color);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
+            background: var(--education-card);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
             border-left: 5px solid var(--primary-color);
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
         
         .question {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: var(--text-color);
-            line-height: 1.4;
+            line-height: 1.5;
+            position: relative;
+            padding-left: 35px;
+        }
+        
+        .question::before {
+            content: "\f059";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--primary-color);
+            font-size: 1.5rem;
         }
         
         .options {
@@ -236,8 +323,8 @@
         .option {
             background: var(--card-bg);
             border: 2px solid var(--border-color);
-            border-radius: 10px;
-            padding: 15px;
+            border-radius: 12px;
+            padding: 18px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 1rem;
@@ -246,6 +333,20 @@
             display: flex;
             align-items: center;
             color: var(--text-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary-color);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
         }
         
         .option:hover {
@@ -254,15 +355,29 @@
             transform: translateX(5px);
         }
         
+        .option:hover::before {
+            transform: scaleY(1);
+        }
+        
         .option.correct {
             background: #d4edda;
             border-color: var(--success-color);
             font-weight: 600;
         }
         
+        .option.correct::before {
+            background: var(--success-color);
+            transform: scaleY(1);
+        }
+        
         .option.incorrect {
             background: #f8d7da;
             border-color: var(--danger-color);
+        }
+        
+        .option.incorrect::before {
+            background: var(--danger-color);
+            transform: scaleY(1);
         }
         
         .option.disabled {
@@ -271,24 +386,51 @@
         }
         
         .timer {
-            background: var(--secondary-color);
+            background: var(--danger-color);
             color: white;
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: center;
             font-size: 1.3rem;
             margin-bottom: 20px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .timer::before {
+            content: "\f017";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
         }
         
         .ticket-info {
             background: var(--primary-color);
             color: white;
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: center;
             margin-bottom: 20px;
             font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ticket-info::before {
+            content: "\f15c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
         }
         
         .result {
@@ -300,27 +442,44 @@
             color: var(--primary-color);
             margin-bottom: 20px;
             font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .result h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
         }
         
         .result-score {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: bold;
             margin: 20px 0;
             color: var(--secondary-color);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .result-message {
             font-size: 1.2rem;
             margin-bottom: 30px;
             line-height: 1.5;
+            color: var(--text-color);
         }
         
         .progress-bar {
-            height: 10px;
+            height: 12px;
             background: var(--border-color);
-            border-radius: 5px;
+            border-radius: 6px;
             margin-bottom: 20px;
             overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         
         .progress {
@@ -328,98 +487,82 @@
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             width: 0%;
             transition: width 0.5s ease;
-        }
-        
-        .stats-container {
-            background: var(--bg-color);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: background-color 0.3s ease;
-        }
-        
-        .stats-header {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .stats-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .stats-item:last-child {
-            border-bottom: none;
-        }
-        
-        .stats-date {
-            font-weight: 600;
-            color: var(--text-color);
-        }
-        
-        .stats-result {
-            font-weight: 600;
-        }
-        
-        .stats-result.excellent {
-            color: var(--success-color);
-        }
-        
-        .stats-result.good {
-            color: #3498db;
-        }
-        
-        .stats-result.satisfactory {
-            color: var(--warning-color);
-        }
-        
-        .stats-result.failed {
-            color: var(--danger-color);
+            border-radius: 6px;
         }
         
         .hint-info {
             background: #fff3cd;
             border: 1px solid #ffeeba;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 15px;
             margin-bottom: 20px;
             text-align: center;
             color: #856404;
             font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .hint-info::before {
+            content: "\f0eb";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: #856404;
         }
         
         .favorite-info {
             background: #e8f4fc;
             border: 1px solid #bee5eb;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 15px;
             margin-bottom: 20px;
             text-align: center;
             color: #0c5460;
             font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .favorite-info::before {
+            content: "\f004";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: #0c5460;
         }
         
         .trainer-info {
             background: #d1ecf1;
             border: 1px solid #bee5eb;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 15px;
             margin-bottom: 20px;
             text-align: center;
             color: #0c5460;
             font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
         
-        .no-stats {
-            text-align: center;
-            color: #7f8c8d;
-            font-style: italic;
-            padding: 20px;
+        .trainer-info::before {
+            content: "\f303";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: #0c5460;
         }
         
         .explanation {
@@ -427,10 +570,11 @@
             border-left: 4px solid var(--success-color);
             padding: 15px;
             margin-top: 15px;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 0.95rem;
             color: #2e7d32;
             display: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         
         .explanation.show {
@@ -447,27 +591,29 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
+            gap: 15px;
+            margin: 25px 0;
         }
         
         .achievement {
-            background: var(--bg-color);
+            background: var(--education-card);
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--text-color);
             position: relative;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid var(--border-color);
         }
         
         .achievement:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
         
         .achievement.locked {
@@ -477,7 +623,7 @@
         
         .achievement-tooltip {
             position: absolute;
-            bottom: -30px;
+            bottom: -35px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(0, 0, 0, 0.8);
@@ -489,6 +635,7 @@
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
+            z-index: 10;
         }
         
         .achievement:hover .achievement-tooltip {
@@ -496,29 +643,31 @@
         }
         
         .search-container {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             position: relative;
         }
         
         .search-input {
             width: 100%;
-            padding: 15px 20px;
+            padding: 18px 25px;
             border-radius: 50px;
             border: 2px solid var(--border-color);
             font-size: 1rem;
             background: var(--card-bg);
             color: var(--text-color);
-            transition: border-color 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         
         .search-input:focus {
             outline: none;
             border-color: var(--primary-color);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
         }
         
         .search-icon {
             position: absolute;
-            right: 20px;
+            right: 25px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-color);
@@ -529,23 +678,27 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             justify-content: center;
         }
         
         .category-btn {
-            background: var(--bg-color);
+            background: var(--education-card);
             border: 2px solid var(--border-color);
-            border-radius: 20px;
-            padding: 8px 15px;
+            border-radius: 25px;
+            padding: 10px 20px;
             font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.3s ease;
             color: var(--text-color);
+            font-weight: 600;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
         }
         
         .category-btn:hover {
             border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
         }
         
         .category-btn.active {
@@ -555,59 +708,85 @@
         }
         
         .card-container {
-            background: var(--bg-color);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
+            background: var(--education-card);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
             text-align: center;
-            min-height: 200px;
+            min-height: 220px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-container::before {
+            content: "\f02d";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 3rem;
+            opacity: 0.1;
+            color: var(--primary-color);
+        }
+        
+        .card-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
         
         .card-question {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: var(--text-color);
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
         }
         
         .card-answer {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--text-color);
             opacity: 0;
             transition: opacity 0.5s ease;
+            font-weight: 500;
+            z-index: 1;
+            position: relative;
         }
         
         .card-answer.show {
             opacity: 1;
         }
         
-        .chart-container {
-            height: 200px;
-            margin: 20px 0;
-        }
-        
         /* Мобильная адаптация */
         @media (max-width: 768px) {
             .container {
-                padding: 15px;
+                padding: 20px;
                 margin: 10px;
             }
             
             h1 {
-                font-size: 1.6rem;
-                margin-bottom: 15px;
+                font-size: 1.8rem;
+                margin-bottom: 20px;
             }
             
             .question {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
+                padding-left: 30px;
+            }
+            
+            .question::before {
+                font-size: 1.3rem;
             }
             
             .option {
-                padding: 12px;
+                padding: 15px;
                 font-size: 0.95rem;
                 min-height: 60px;
             }
@@ -632,7 +811,7 @@
             }
             
             .result-score {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
             }
             
             .result-message {
@@ -646,27 +825,32 @@
             }
             
             .container {
-                padding: 12px;
-                border-radius: 10px;
+                padding: 15px;
+                border-radius: 15px;
             }
             
             h1 {
-                font-size: 1.4rem;
-                margin-bottom: 12px;
+                font-size: 1.6rem;
+                margin-bottom: 15px;
             }
             
             .question-container {
-                padding: 15px;
-                margin-bottom: 15px;
+                padding: 20px;
+                margin-bottom: 20px;
             }
             
             .question {
-                font-size: 1rem;
-                margin-bottom: 15px;
+                font-size: 1.1rem;
+                margin-bottom: 20px;
+                padding-left: 25px;
+            }
+            
+            .question::before {
+                font-size: 1.2rem;
             }
             
             .option {
-                padding: 10px;
+                padding: 12px;
                 font-size: 0.9rem;
                 min-height: 50px;
             }
@@ -690,7 +874,7 @@
             }
             
             .progress-bar {
-                height: 8px;
+                height: 10px;
                 margin-bottom: 15px;
             }
             
@@ -704,7 +888,7 @@
             }
             
             .result-score {
-                font-size: 2rem;
+                font-size: 2.2rem;
                 margin: 15px 0;
             }
             
@@ -721,20 +905,18 @@
             <i class="fas fa-moon"></i>
         </button>
         
-        <h1>Подготовка по технике безопасности</h1>
+        <h1><i class="fas fa-book-open"></i> Подготовка по технике безопасности</h1>
         
         <!-- Начальный экран -->
         <div id="startScreen" class="screen active">
             <div style="text-align: center; margin: 30px 0;">
-                <p style="font-size: 1.1rem; margin-bottom: 25px; color: var(--text-color);">
+                <p style="font-size: 1.2rem; margin-bottom: 30px; color: var(--text-color); font-weight: 500;">
                     Выберите режим тестирования:
                 </p>
-                <button class="btn" onclick="startTraining()">Режим обучения</button>
-                <button class="btn btn-exam" onclick="startExam()">Пройти экзамен</button>
-                <button class="btn btn-favorite" onclick="startFavorites()">Избранные вопросы</button>
-                <button class="btn btn-restart" onclick="startTrainer()">Тренажер ошибок</button>
-                <button class="btn btn-search" onclick="startSearch()">Поиск вопросов</button>
-                <button class="btn btn-cards" onclick="startCards()">Карточки</button>
+                <button class="btn" onclick="startTraining()"><i class="fas fa-graduation-cap"></i> Режим обучения</button>
+                <button class="btn btn-exam" onclick="startExam()"><i class="fas fa-file-alt"></i> Пройти экзамен</button>
+                <button class="btn btn-restart" onclick="startTrainer()"><i class="fas fa-redo"></i> Тренажер ошибок</button>
+                <button class="btn btn-cards" onclick="startCards()"><i class="fas fa-clone"></i> Карточки</button>
             </div>
             
             <div class="achievements">
@@ -756,27 +938,18 @@
                 </div>
             </div>
             
-            <div style="background: var(--bg-color); padding: 20px; border-radius: 10px; margin-top: 25px; transition: background-color 0.3s ease;">
-                <h3 style="color: var(--primary-color); margin-top: 0;">Информация:</h3>
-                <ul style="padding-left: 20px; line-height: 1.7;">
-                    <li>Режим обучения: это 63 вопроса без ограничения времени</li>
-                    <li>Экзамен: это 30 минут, случайный билет (10 или 13 вопросов)</li>
-                    <li>Избранные вопросы: повторение отмеченных вопросов</li>
-                    <li>Тренажер ошибок: повторение вопросов с неправильными ответами</li>
-                    <li>Поиск вопросов: поиск по ключевым словам</li>
-                    <li>Карточки: изучение в формате вопрос-ответ</li>
-                    <li>Ухпп ЦЕХ № 4</li>
+            <div style="background: var(--education-card); padding: 25px; border-radius: 15px; margin-top: 30px; transition: background-color 0.3s ease; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                <h3 style="color: var(--primary-color); margin-top: 0; font-size: 1.3rem; position: relative; padding-left: 30px;">
+                    <i class="fas fa-info-circle" style="position: absolute; left: 0; top: 2px; color: var(--primary-color);"></i>
+                    Информация:
+                </h3>
+                <ul style="padding-left: 20px; line-height: 1.8; font-size: 1rem;">
+                    <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Режим обучения: это 63 вопроса без ограничения времени</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Экзамен: это 30 минут, случайный билет (10 или 13 вопросов)</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Тренажер ошибок: повторение вопросов с неправильными ответами</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Карточки: изучение в формате вопрос-ответ</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Ухпп ЦЕХ № 4</li>
                 </ul>
-            </div>
-            
-            <div class="stats-container">
-                <div class="stats-header">История экзаменов</div>
-                <div id="statsList">
-                    <div class="no-stats">Нет результатов экзаменов</div>
-                </div>
-                <div class="chart-container">
-                    <canvas id="progressChart"></canvas>
-                </div>
             </div>
         </div>
         
@@ -794,10 +967,10 @@
                 <div class="explanation" id="trainingExplanation"></div>
             </div>
             
-            <div style="text-align: center; margin-top: 25px;">
-                <button class="btn btn-hint" id="hintBtn" onclick="useHint()">Использовать подсказку</button>
-                <button class="btn btn-favorite" id="favoriteBtn" onclick="toggleFavorite()">Добавить в избранное</button>
-                <button class="btn" onclick="backToStart()">Вернуться в меню</button>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-hint" id="hintBtn" onclick="useHint()"><i class="fas fa-lightbulb"></i> Использовать подсказку</button>
+                <button class="btn btn-favorite" id="favoriteBtn" onclick="toggleFavorite()"><i class="fas fa-star"></i> Добавить в избранное</button>
+                <button class="btn" onclick="backToStart()"><i class="fas fa-arrow-left"></i> Вернуться в меню</button>
             </div>
         </div>
         
@@ -816,18 +989,18 @@
                 <div class="explanation" id="examExplanation"></div>
             </div>
             
-            <div style="text-align: center; margin-top: 25px;">
-                <button class="btn" onclick="backToStart()">Вернуться в меню</button>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="backToStart()"><i class="fas fa-arrow-left"></i> Вернуться в меню</button>
             </div>
         </div>
         
         <!-- Экран результатов -->
         <div id="resultScreen" class="screen">
             <div class="result">
-                <h2>Результаты экзамена</h2>
+                <h2><i class="fas fa-chart-line"></i> Результаты экзамена</h2>
                 <div class="result-score" id="resultScore">0%</div>
                 <div class="result-message" id="resultMessage"></div>
-                <button class="btn btn-restart" onclick="backToStart()">Пройти заново</button>
+                <button class="btn btn-restart" onclick="backToStart()"><i class="fas fa-redo"></i> Пройти заново</button>
             </div>
         </div>
         
@@ -845,8 +1018,8 @@
                 <div class="explanation" id="favoritesExplanation"></div>
             </div>
             
-            <div style="text-align: center; margin-top: 25px;">
-                <button class="btn" onclick="backToStart()">Вернуться в меню</button>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="backToStart()"><i class="fas fa-arrow-left"></i> Вернуться в меню</button>
             </div>
         </div>
         
@@ -864,8 +1037,8 @@
                 <div class="explanation" id="trainerExplanation"></div>
             </div>
             
-            <div style="text-align: center; margin-top: 25px;">
-                <button class="btn" onclick="backToStart()">Вернуться в меню</button>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="backToStart()"><i class="fas fa-arrow-left"></i> Вернуться в меню</button>
             </div>
         </div>
         
@@ -888,8 +1061,8 @@
                 <div class="no-stats">Введите ключевые слова для поиска</div>
             </div>
             
-            <div style="text-align: center; margin-top: 25px;">
-                <button class="btn" onclick="backToStart()">Вернуться в меню</button>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="backToStart()"><i class="fas fa-arrow-left"></i> Вернуться в меню</button>
             </div>
         </div>
         
@@ -900,9 +1073,9 @@
                 <div class="card-answer" id="cardAnswer"></div>
             </div>
             
-            <div style="text-align: center; margin-top: 25px;">
-                <button class="btn" id="cardBtn" onclick="nextCard()">Далее</button>
-                <button class="btn" onclick="backToStart()">Вернуться в меню</button>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" id="cardBtn" onclick="nextCard()"><i class="fas fa-arrow-right"></i> Далее</button>
+                <button class="btn" onclick="backToStart()"><i class="fas fa-arrow-left"></i> Вернуться в меню</button>
             </div>
         </div>
     </div>
@@ -1084,7 +1257,7 @@
                 ],
                 correct: 1,
                 category: "Безопасность",
-                explanation: "Правильный ответ: Журнал учета выдачи блокираторов и замков... Объяснение: Полный комплект документации включает журналы учета, передачи ключей, использования мастер-ключа и памятки по применению блокирующих устройств."
+                explanation: "Правильный ответ: Журнал учета выдачи блокираторов и замков... Объяснение: Полный комплект документации включает журналы учета, передачи ключей, использование мастер-ключа и памятки по применению блокирующих устройств."
             },
             {
                 question: "Как функционально различаются блокировочные навесные замки?",
@@ -1593,7 +1766,6 @@
         let currentCardIndex = 0;
         let searchResults = [];
         let currentCategory = 'all';
-        let progressChart = null;
         
         // Показать экран
         function showScreen(screenId) {
@@ -1606,7 +1778,6 @@
         // Вернуться в начало
         function backToStart() {
             clearInterval(examTimer);
-            loadStats();
             updateAchievements();
             showScreen('startScreen');
         }
@@ -1658,100 +1829,6 @@
                 questionCount: questionCount
             });
             localStorage.setItem('examStats', JSON.stringify(stats));
-        }
-        
-        // Загрузка статистики
-        function loadStats() {
-            const stats = JSON.parse(localStorage.getItem('examStats') || '[]');
-            const statsList = document.getElementById('statsList');
-            
-            if (stats.length === 0) {
-                statsList.innerHTML = '<div class="no-stats">Нет результатов экзаменов</div>';
-                updateProgressChart([]);
-                return;
-            }
-            
-            statsList.innerHTML = '';
-            stats.slice(-5).reverse().forEach(stat => {
-                const date = new Date(stat.date);
-                const dateStr = `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-                
-                let resultClass = '';
-                if (stat.percentage >= 90) resultClass = 'excellent';
-                else if (stat.percentage >= 70) resultClass = 'good';
-                else if (stat.percentage >= 50) resultClass = 'satisfactory';
-                else resultClass = 'failed';
-                
-                const minutes = Math.floor(stat.timeSpent / 60);
-                const seconds = stat.timeSpent % 60;
-                const timeStr = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-                
-                const statsItem = document.createElement('div');
-                statsItem.className = 'stats-item';
-                statsItem.innerHTML = `
-                    <div class="stats-date">${dateStr}</div>
-                    <div class="stats-result ${resultClass}">${stat.percentage}% (${stat.questionCount} вопросов, ${timeStr})</div>
-                `;
-                statsList.appendChild(statsItem);
-            });
-            
-            updateProgressChart(stats);
-        }
-        
-        // Обновление графика прогресса
-        function updateProgressChart(stats) {
-            const ctx = document.getElementById('progressChart').getContext('2d');
-            
-            if (progressChart) {
-                progressChart.destroy();
-            }
-            
-            if (stats.length === 0) {
-                return;
-            }
-            
-            const labels = stats.map(stat => {
-                const date = new Date(stat.date);
-                return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}`;
-            });
-            
-            const data = stats.map(stat => stat.percentage);
-            
-            progressChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Результат экзамена (%)',
-                        data: data,
-                        backgroundColor: 'rgba(26, 42, 108, 0.2)',
-                        borderColor: 'rgba(26, 42, 108, 1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
-                }
-            });
         }
         
         // Обновление достижений
@@ -1813,10 +1890,10 @@
             const btn = document.getElementById('favoriteBtn');
             
             if (isFavorite) {
-                btn.textContent = 'Удалить из избранного';
+                btn.innerHTML = '<i class="fas fa-star"></i> Удалить из избранного';
                 btn.classList.add('active');
             } else {
-                btn.textContent = 'Добавить в избранное';
+                btn.innerHTML = '<i class="fas fa-star"></i> Добавить в избранное';
                 btn.classList.remove('active');
             }
         }
@@ -2333,7 +2410,7 @@
         function startCards() {
             currentCardIndex = 0;
             showScreen('cardsScreen');
-            document.getElementById('cardBtn').textContent = 'Далее';
+            document.getElementById('cardBtn').innerHTML = '<i class="fas fa-arrow-right"></i> Далее';
             showCard();
         }
         
@@ -2356,11 +2433,11 @@
             if (!answerElement.classList.contains('show')) {
                 // Показать ответ
                 answerElement.classList.add('show');
-                document.getElementById('cardBtn').textContent = 'Далее';
+                document.getElementById('cardBtn').innerHTML = '<i class="fas fa-arrow-right"></i> Далее';
             } else {
                 // Перейти к следующей карточке
                 currentCardIndex++;
-                document.getElementById('cardBtn').textContent = 'Далее';
+                document.getElementById('cardBtn').innerHTML = '<i class="fas fa-arrow-right"></i> Далее';
                 showCard();
             }
         }
@@ -2368,7 +2445,6 @@
         // Инициализация при загрузке страницы
         window.onload = function() {
             loadData();
-            loadStats();
             updateAchievements();
         };
     </script>
