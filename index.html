@@ -28,18 +28,18 @@
         }
         
         body.dark-theme {
-            --primary-color: #4a90e2;
-            --secondary-color: #27ae60;
-            --accent-color: #e67e22;
+            --primary-color: #4a9eff;
+            --secondary-color: #00d68f;
+            --accent-color: #ff9f43;
             --text-color: #e0e0e0;
-            --bg-color: #1a1a1a;
-            --card-bg: #2d2d2d;
-            --border-color: #444444;
-            --success-color: #2ecc71;
-            --warning-color: #f39c12;
-            --danger-color: #e74c3c;
-            --education-bg: linear-gradient(135deg, #434343 0%, #000000 100%);
-            --education-card: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --border-color: #333333;
+            --success-color: #00d68f;
+            --warning-color: #ff9f43;
+            --danger-color: #ff6b6b;
+            --education-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --education-card: linear-gradient(135deg, #2d3561 0%, #0f3460 100%);
         }
         
         body {
@@ -201,6 +201,30 @@
             background: linear-gradient(45deg, #2980b9, var(--primary-color));
         }
         
+        /* Эффект пульсации при нажатии на кнопку */
+        .btn:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform .5s, opacity 1s;
+        }
+        
+        .btn:active:after {
+            transform: scale(0, 0);
+            opacity: .3;
+            transition: 0s;
+        }
+        
         .btn i {
             margin-right: 8px;
         }
@@ -235,6 +259,7 @@
             font-size: 0.9rem;
             padding: 12px 20px;
             max-width: 200px;
+            display: none; /* СКРЫТАЯ КНОПКА */
         }
         
         .btn-favorite:hover {
@@ -287,6 +312,12 @@
             border-left: 5px solid var(--primary-color);
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeInScale 0.5s ease-out;
+        }
+        
+        @keyframes fadeInScale {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
         
         .question-container:hover {
@@ -335,7 +366,20 @@
             color: var(--text-color);
             position: relative;
             overflow: hidden;
+            animation: slideInFromRight 0.4s ease-out;
+            animation-fill-mode: both;
         }
+        
+        @keyframes slideInFromRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* Задержка для каждого варианта, чтобы они появлялись по очереди */
+        .option:nth-child(1) { animation-delay: 0.1s; }
+        .option:nth-child(2) { animation-delay: 0.2s; }
+        .option:nth-child(3) { animation-delay: 0.3s; }
+        .option:nth-child(4) { animation-delay: 0.4s; }
         
         .option::before {
             content: "";
@@ -363,6 +407,13 @@
             background: #d4edda;
             border-color: var(--success-color);
             font-weight: 600;
+            animation: correctPulse 0.6s ease;
+        }
+        
+        @keyframes correctPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 15px rgba(46, 204, 113, 0.7); }
+            100% { transform: scale(1); }
         }
         
         .option.correct::before {
@@ -373,6 +424,13 @@
         .option.incorrect {
             background: #f8d7da;
             border-color: var(--danger-color);
+            animation: incorrectShake 0.6s ease;
+        }
+        
+        @keyframes incorrectShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
         
         .option.incorrect::before {
@@ -488,6 +546,39 @@
             width: 0%;
             transition: width 0.5s ease;
             border-radius: 6px;
+        }
+        
+        /* Индикатор общего прогресса */
+        .overall-progress {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .overall-progress-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+        
+        .overall-progress-bar {
+            height: 12px;
+            background: var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        
+        .overall-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 6px;
+        }
+        
+        .overall-progress-text {
+            font-size: 0.9rem;
+            color: var(--text-color);
         }
         
         .hint-info {
@@ -619,6 +710,16 @@
         .achievement.locked {
             opacity: 0.5;
             filter: grayscale(100%);
+        }
+        
+        .achievement.unlocked {
+            animation: unlockAchievement 1s ease;
+        }
+        
+        @keyframes unlockAchievement {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
         }
         
         .achievement-tooltip {
@@ -762,6 +863,74 @@
         
         .card-answer.show {
             opacity: 1;
+        }
+        
+        /* Модальное окно для достижений */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+            animation: slideIn 0.5s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .achievement-icon {
+            font-size: 4rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            animation: bounce 1s infinite alternate;
+        }
+        
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-15px); }
+        }
+        
+        /* Конфетти для успешного результата */
+        #confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            animation: confetti-fall 3s linear forwards;
+        }
+        
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
         }
         
         /* Мобильная адаптация */
@@ -957,6 +1126,15 @@
         <div id="trainingScreen" class="screen">
             <div class="hint-info" id="hintInfo">Подсказок осталось: 3</div>
             
+            <!-- Индикатор общего прогресса -->
+            <div class="overall-progress">
+                <div class="overall-progress-label">Общий прогресс</div>
+                <div class="overall-progress-bar">
+                    <div class="overall-progress-fill" id="overallProgressFill"></div>
+                </div>
+                <div class="overall-progress-text" id="overallProgressText">0%</div>
+            </div>
+            
             <div class="progress-bar">
                 <div class="progress" id="trainingProgress"></div>
             </div>
@@ -969,6 +1147,7 @@
             
             <div style="text-align: center; margin-top: 30px;">
                 <button class="btn btn-hint" id="hintBtn" onclick="useHint()"><i class="fas fa-lightbulb"></i> Использовать подсказку</button>
+                <!-- Кнопка избранного скрыта -->
                 <button class="btn btn-favorite" id="favoriteBtn" onclick="toggleFavorite()"><i class="fas fa-star"></i> Добавить в избранное</button>
                 <button class="btn" onclick="backToStart()"><i class="fas fa-arrow-left"></i> Вернуться в меню</button>
             </div>
@@ -1079,6 +1258,22 @@
             </div>
         </div>
     </div>
+    
+    <!-- Модальное окно для достижений -->
+    <div id="achievementModal" class="modal">
+        <div class="modal-content">
+            <div class="achievement-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2>Получено достижение!</h2>
+            <p id="achievementName">Название достижения</p>
+            <p id="achievementDescription">Описание достижения</p>
+            <button class="btn" onclick="closeAchievementModal()">Отлично!</button>
+        </div>
+    </div>
+    
+    <!-- Контейнер для конфетти -->
+    <div id="confetti-container"></div>
     
     <script>
         // Все вопросы из документа с категориями и объяснениями
@@ -1837,25 +2032,72 @@
             const totalQuestions = favorites.length + incorrectAnswers.length;
             
             // Достижение 1: Новичок (пройден первый экзамен)
-            if (stats.length > 0) {
+            if (stats.length > 0 && document.getElementById('achievement1').classList.contains('locked')) {
                 document.getElementById('achievement1').classList.remove('locked');
+                document.getElementById('achievement1').classList.add('unlocked');
+                showAchievementModal('Новичок', 'Вы прошли свой первый экзамен!');
             }
             
             // Достижение 2: Стремительный (экзамен пройден быстрее чем за 15 минут)
             const fastExam = stats.some(stat => stat.timeSpent < 15 * 60);
-            if (fastExam) {
+            if (fastExam && document.getElementById('achievement2').classList.contains('locked')) {
                 document.getElementById('achievement2').classList.remove('locked');
+                document.getElementById('achievement2').classList.add('unlocked');
+                showAchievementModal('Стремительный', 'Вы сдали экзамен быстрее чем за 15 минут!');
             }
             
             // Достижение 3: Эксперт (5 экзаменов с результатом 90% и выше)
             const excellentExams = stats.filter(stat => stat.percentage >= 90).length;
-            if (excellentExams >= 5) {
+            if (excellentExams >= 5 && document.getElementById('achievement3').classList.contains('locked')) {
                 document.getElementById('achievement3').classList.remove('locked');
+                document.getElementById('achievement3').classList.add('unlocked');
+                showAchievementModal('Эксперт', 'Вы сдали 5 экзаменов на отлично!');
             }
             
             // Достижение 4: Мастер (более 20 избранных вопросов)
-            if (favorites.length >= 20) {
+            if (favorites.length >= 20 && document.getElementById('achievement4').classList.contains('locked')) {
                 document.getElementById('achievement4').classList.remove('locked');
+                document.getElementById('achievement4').classList.add('unlocked');
+                showAchievementModal('Мастер', 'Вы добавили более 20 вопросов в избранное!');
+            }
+        }
+        
+        // Показать модальное окно достижения
+        function showAchievementModal(name, description) {
+            document.getElementById('achievementName').textContent = name;
+            document.getElementById('achievementDescription').textContent = description;
+            document.getElementById('achievementModal').style.display = 'block';
+        }
+        
+        // Закрыть модальное окно достижения
+        function closeAchievementModal() {
+            document.getElementById('achievementModal').style.display = 'none';
+        }
+        
+        // Создание конфетти
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#3498db', '#2ecc71', '#f39c12', '#e74c3c', '#9b59b6'];
+            
+            for (let i = 0; i < 150; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.height = confetti.style.width;
+                    confetti.style.opacity = Math.random() * 0.8 + 0.2;
+                    confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    
+                    container.appendChild(confetti);
+                    
+                    // Удалить элемент после завершения анимации
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }, i * 30);
             }
         }
         
@@ -1867,13 +2109,37 @@
             saveData();
         }
         
+        // Эффект печатания для текста вопроса
+        function typeWriter(elementId, text, speed = 30) {
+            const element = document.getElementById(elementId);
+            element.textContent = '';
+            let i = 0;
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+        
+        // Обновление общего прогресса
+        function updateOverallProgress() {
+            const progress = (currentTrainingIndex / questions.length) * 100;
+            document.getElementById('overallProgressFill').style.width = `${progress}%`;
+            document.getElementById('overallProgressText').textContent = `${Math.round(progress)}%`;
+        }
+        
         // Начать режим обучения
         function startTraining() {
             loadData();
             userAnswers = [];
             showScreen('trainingScreen');
             updateHintInfo();
-            updateFavoriteButton();
+            updateOverallProgress();
             showTrainingQuestion();
         }
         
@@ -1881,21 +2147,6 @@
         function updateHintInfo() {
             document.getElementById('hintInfo').textContent = `Подсказок осталось: ${hintsRemaining}`;
             document.getElementById('hintBtn').disabled = hintsRemaining <= 0;
-        }
-        
-        // Обновить кнопку избранного
-        function updateFavoriteButton() {
-            const questionIndex = currentTrainingIndex;
-            const isFavorite = favorites.includes(questionIndex);
-            const btn = document.getElementById('favoriteBtn');
-            
-            if (isFavorite) {
-                btn.innerHTML = '<i class="fas fa-star"></i> Удалить из избранного';
-                btn.classList.add('active');
-            } else {
-                btn.innerHTML = '<i class="fas fa-star"></i> Добавить в избранное';
-                btn.classList.remove('active');
-            }
         }
         
         // Показать вопрос в режиме обучения
@@ -1906,7 +2157,7 @@
             }
             
             const question = questions[currentTrainingIndex];
-            document.getElementById('trainingQuestion').textContent = question.question;
+            typeWriter('trainingQuestion', question.question);
             
             const optionsContainer = document.getElementById('trainingOptions');
             optionsContainer.innerHTML = '';
@@ -1924,8 +2175,8 @@
             const progress = ((currentTrainingIndex + 1) / questions.length) * 100;
             document.getElementById('trainingProgress').style.width = `${progress}%`;
             
-            // Обновить кнопку избранного
-            updateFavoriteButton();
+            // Обновить общий прогресс
+            updateOverallProgress();
             
             // Скрыть объяснение
             document.getElementById('trainingExplanation').classList.remove('show');
@@ -1956,21 +2207,6 @@
             
             hintsRemaining--;
             updateHintInfo();
-            saveData();
-        }
-        
-        // Переключить избранное
-        function toggleFavorite() {
-            const questionIndex = currentTrainingIndex;
-            const index = favorites.indexOf(questionIndex);
-            
-            if (index === -1) {
-                favorites.push(questionIndex);
-            } else {
-                favorites.splice(index, 1);
-            }
-            
-            updateFavoriteButton();
             saveData();
         }
         
@@ -2156,6 +2392,11 @@
             }
             
             document.getElementById('resultMessage').textContent = message;
+            
+            // Добавить конфетти при успешном результате
+            if (percentage >= 70) {
+                createConfetti();
+            }
         }
         
         // Начать режим избранных вопросов
