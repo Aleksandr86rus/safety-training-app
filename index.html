@@ -26,6 +26,8 @@
             --danger-color: #e74c3c;
             --education-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --education-card: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --gold-bg: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            --gold-card: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
         }
         
         body.dark-theme {
@@ -41,6 +43,8 @@
             --danger-color: #ff6b6b;
             --education-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             --education-card: linear-gradient(135deg, #2d3561 0%, #0f3460 100%);
+            --gold-bg: linear-gradient(135deg, #2a2a2a 0%, #3d3d3d 100%);
+            --gold-card: linear-gradient(135deg, #3a3a3a 0%, #4d4d4d 100%);
         }
         
         body {
@@ -315,6 +319,18 @@
             background: linear-gradient(45deg, #2c3e50, #34495e);
         }
         
+        .btn-gold {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+        }
+        
+        .btn-gold:hover {
+            background: linear-gradient(45deg, #e67e22, #f39c12);
+        }
+        
+        .hidden-mode {
+            display: none !important;
+        }
+        
         .question-container {
             background: var(--education-card);
             border-radius: 15px;
@@ -326,12 +342,23 @@
             animation: fadeInScale 0.5s ease-out;
         }
         
+        .gold-question-container {
+            background: var(--gold-card);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid #f39c12;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeInScale 0.5s ease-out;
+        }
+        
         @keyframes fadeInScale {
             from { transform: scale(0.95); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
         
-        .question-container:hover {
+        .question-container:hover, .gold-question-container:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
@@ -354,6 +381,17 @@
             left: 0;
             top: 0;
             color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        .gold-question::before {
+            content: "\f3e5";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #f39c12;
             font-size: 1.5rem;
         }
         
@@ -663,6 +701,31 @@
             transform: translateY(-50%);
             font-size: 1.2rem;
             color: #0c5460;
+        }
+        
+        .gold-info {
+            background: #fff8e1;
+            border: 1px solid #ffecb3;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #ff6f00;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .gold-info::before {
+            content: "\f3e5";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: #f39c12;
         }
         
         .explanation {
@@ -1189,7 +1252,7 @@
                 margin-bottom: 15px;
             }
             
-            .question-container {
+            .question-container, .gold-question-container {
                 padding: 20px;
                 margin-bottom: 20px;
             }
@@ -1266,12 +1329,13 @@
         <div id="startScreen" class="screen active">
             <div style="text-align: center; margin: 30px 0;">
                 <p style="font-size: 1.2rem; margin-bottom: 30px; color: var(--text-color); font-weight: 500;">
-                    Выберите режим тестирования:
+                    Выберите режим:
                 </p>
                 <button class="btn" onclick="startTraining()"><i class="fas fa-graduation-cap"></i> Режим обучения</button>
                 <button class="btn btn-exam" onclick="startExam()"><i class="fas fa-file-alt"></i> Пройти экзамен</button>
-                <button class="btn btn-restart" onclick="startTrainer()"><i class="fas fa-redo"></i> Тренажер ошибок</button>
-                <button class="btn btn-cards" onclick="startCards()"><i class="fas fa-clone"></i> Карточки</button>
+                <button class="btn btn-restart hidden-mode" onclick="startTrainer()"><i class="fas fa-redo"></i> Тренажер ошибок</button>
+                <button class="btn btn-cards hidden-mode" onclick="startCards()"><i class="fas fa-clone"></i> Карточки</button>
+                <button class="btn btn-gold" onclick="startGoldRules()"><i class="fas fa-medal"></i> Золотые правила</button>
                 <button class="btn btn-admin" onclick="showAdminModal()"><i class="fas fa-user-shield"></i> Администратор</button>
             </div>
             
@@ -1292,6 +1356,10 @@
                     <i class="fas fa-medal"></i>
                     <div class="achievement-tooltip">Мастер</div>
                 </div>
+                <div class="achievement locked" id="achievement5">
+                    <i class="fas fa-crown"></i>
+                    <div class="achievement-tooltip">Золотой мастер</div>
+                </div>
             </div>
             
             <div style="background: var(--education-card); padding: 25px; border-radius: 15px; margin-top: 30px; transition: background-color 0.3s ease; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
@@ -1302,8 +1370,7 @@
                 <ul style="padding-left: 20px; line-height: 1.8; font-size: 1rem;">
                     <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Режим обучения: это 63 вопроса без ограничения времени</li>
                     <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Экзамен: это 30 минут, случайный билет (10 или 13 вопросов)</li>
-                    <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Тренажер ошибок: повторение вопросов с неправильными ответами</li>
-                    <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Карточки: изучение в формате вопрос-ответ</li>
+                    <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Золотые правила: тестирование по ключевым требованиям безопасности</li>
                     <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Ухпп ЦЕХ № 4</li>
                 </ul>
             </div>
@@ -1313,7 +1380,7 @@
                 <ul>
                     <li><i class="fab fa-android" style="color: var(--secondary-color); margin-right: 8px;"></i><strong>Android:</strong> В Chrome нажмите на меню (три точки) → "Добавить на главный экран"</li>
                     <li><i class="fab fa-apple" style="color: var(--secondary-color); margin-right: 8px;"></i><strong>iOS:</strong> В Safari нажмите на кнопку "Поделиться" → "На главный экран"</li>
-                    <li><i class="fas fa-info-circle" style="color: var(--primary-color); margin-right: 8px;"></i>После установки приложение будет работать без подключения к интернету</li>
+                    <li><i class="fas fa-info-circle" style="color: var(--primary-color); margin-right: 8px;"></i>.</li>
                 </ul>
             </div>
         </div>
@@ -1398,7 +1465,7 @@
         </div>
         
         <!-- Экран тренажера -->
-        <div id="trainerScreen" class="screen">
+        <div id="trainerScreen" class="screen hidden-mode">
             <div class="trainer-info">Вопросы с ошибками: <span id="trainerCount">0</span></div>
             
             <div class="progress-bar">
@@ -1441,7 +1508,7 @@
         </div>
         
         <!-- Экран карточек -->
-        <div id="cardsScreen" class="screen">
+        <div id="cardsScreen" class="screen hidden-mode">
             <div class="card-container">
                 <div class="card-question" id="cardQuestion">Нажмите "Далее" для начала</div>
                 <div class="card-answer" id="cardAnswer"></div>
@@ -1449,6 +1516,26 @@
             
             <div style="text-align: center; margin-top: 30px;">
                 <button class="btn" id="cardBtn" onclick="nextCard()"><i class="fas fa-arrow-right"></i> Далее</button>
+                <button class="btn" onclick="backToStart()"><i class="fas fa-arrow-left"></i> Вернуться в меню</button>
+            </div>
+        </div>
+        
+        <!-- Экран Золотых правил -->
+        <div id="goldRulesScreen" class="screen">
+            <div class="gold-info">Золотые правила безопасности труда: <span id="goldRulesCount">32</span> вопросов</div>
+            
+            <div class="progress-bar">
+                <div class="progress" id="goldRulesProgress"></div>
+            </div>
+            
+            <div class="gold-question-container">
+                <div class="question gold-question" id="goldRulesQuestion"></div>
+                <div class="options" id="goldRulesOptions"></div>
+                <div class="explanation" id="goldRulesExplanation"></div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-favorite" id="goldRulesFavoriteBtn" onclick="toggleGoldRulesFavorite()"><i class="fas fa-star"></i> Добавить в избранное</button>
                 <button class="btn" onclick="backToStart()"><i class="fas fa-arrow-left"></i> Вернуться в меню</button>
             </div>
         </div>
@@ -2205,6 +2292,333 @@
             }
         ];
         
+        // Вопросы по Золотым правилам безопасности труда
+        let goldRulesQuestions = [
+            {
+                question: "Кем должны использоваться ремни безопасности при перевозке людей автотранспортом?",
+                options: [
+                    "Водителем и всеми пассажирами.",
+                    "Водителем",
+                    "Водителем и старшим по автобусу"
+                ],
+                correct: 0,
+                explanation: "Правильный ответ: Водителем и всеми пассажирами. Объяснение: Ремни безопасности должны использоваться всеми находящимися в транспортном средстве для обеспечения безопасности."
+            },
+            {
+                question: "Где необходимо обеспечить контроль за состояния воздушной среды при производстве газоопасных работ?",
+                options: [
+                    "На рабочем месте",
+                    "При работах в котловане",
+                    "При работах в замкнутом пространстве",
+                    "Правильные ответы 3 и 4",
+                    "На рабочем месте и в опасной зоне."
+                ],
+                correct: 4,
+                explanation: "Правильный ответ: На рабочем месте и в опасной зоне. Объяснение: Контроль воздушной среды необходим как на самом рабочем месте, так и в прилегающей опасной зоне."
+            },
+            {
+                question: "Разрешается ли перемещать груз при нахождении под ним людей?",
+                options: [
+                    "Запрещается.",
+                    "Разрешается при наличии защитной каски",
+                    "Разрешается",
+                    "Разрешается если это прописано в наряде-допуске"
+                ],
+                correct: 0,
+                explanation: "Правильный ответ: Запрещается. Объяснение: Перемещение груза над людьми категорически запрещено из-за риска падения груза."
+            },
+            {
+                question: "Запрещены ли работы на высоте при грозе?",
+                options: [
+                    "Разрешены",
+                    "Запрещены.",
+                    "Разрешены по согласовании с руководителем объекта"
+                ],
+                correct: 1,
+                explanation: "Правильный ответ: Запрещены. Объяснение: Работы на высоте во время грозы запрещены из-за высокой опасности поражения молнией."
+            },
+            {
+                question: "При какой скорости ветра запрещены работы на высоте при монтаже-демонтаже конструкций?",
+                options: [
+                    "15 м/с и более",
+                    "10 м/с и более.",
+                    "12 м/с и более"
+                ],
+                correct: 1,
+                explanation: "Правильный ответ: 10 м/с и более. Объяснение: При монтаже-демонтаже конструкций работы на высоте запрещены при скорости ветра 10 м/с и более."
+            },
+            {
+                question: "Как должна доводиться памятка «Золотые правила по безопасности труда» до работников подрядных/субподрядных организаций:",
+                options: [
+                    "В ходе проведения вводного инструктажа",
+                    "Размещения текста Памятки «Золотые правила безопасности труда» на информационных стендах для ознакомления",
+                    "Любым из перечисленных способов.",
+                    "Обеспечения работников информационными буклетами предпочтительно «карманного» формата, для удобства ношения и использования на рабочих местах",
+                    "Демонстрации презентационных материалов",
+                    "Производства и демонстрации видео и анимационных роликов",
+                    "Размещения памятки на информационном ресурсе"
+                ],
+                correct: 2,
+                explanation: "Правильный ответ: Любым из перечисленных способов. Объяснение: Памятка может доводиться до работников любым удобным способом из перечисленных."
+            },
+            {
+                question: "Должна ли быть на оборудовании, находящимся под воздействием энергии любого рода, соответствующая блокировка с предупредительными табличками в точках отключения?",
+                options: [
+                    "Должна.",
+                    "Не должна",
+                    "Не обязательно"
+                ],
+                correct: 0,
+                explanation: "Правильный ответ: Должна. Объяснение: Оборудование под воздействием энергии должно иметь блокировку с предупредительными табличками в точках отключения."
+            },
+            {
+                question: "Разрешается ли эксплуатация оборудования при отсутствии или неисправности защитных устройств и приспособлений?",
+                options: [
+                    "Запрещается.",
+                    "Разрешается",
+                    "Разрешается по согласованию со службой ПБОТОС"
+                ],
+                correct: 0,
+                explanation: "Правильный ответ: Запрещается. Объяснение: Эксплуатация оборудования без защитных устройств или при их неисправности запрещена."
+            },
+            {
+                question: "Какие должны соблюдаться условия при проведении грузоподъемных операций с применением кранов, лебедок, механических подъемных устройств, грузозахватных приспособлений?",
+                options: [
+                    "Грузоподъемное оборудование и механизмы визуально исправны, должны иметь лицензию и допущены к эксплуатации",
+                    "Грузоподъемное оборудование и механизмы визуально и технически не исправны, должны иметь лицензию и допущены к эксплуатации",
+                    "Грузоподъемное оборудование и механизмы технически исправны, освидетельствованы и допущены к эксплуатации."
+                ],
+                correct: 2,
+                explanation: "Правильный ответ: Грузоподъемное оборудование и механизмы технически исправны, освидетельствованы и допущены к эксплуатации. Объяснение: Грузоподъемное оборудование должно быть технически исправным и прошедшим освидетельствование."
+            },
+            {
+                question: "Чем должны быть огорожены и защищены движущие (вращающиеся) части механизмов?",
+                options: [
+                    "Ограждениями, кожухами и защитными экранами.",
+                    "Сигнальной лентой",
+                    "Забором",
+                    "Сигнальной лентой и забором",
+                    "Правильные ответы 3 и 4"
+                ],
+                correct: 0,
+                explanation: "Правильный ответ: Ограждениями, кожухами и защитными экранами. Объяснение: Движущиеся части механизмов должны быть защищены специальными ограждениями."
+            },
+            {
+                question: "Что называется газоопасными работами?",
+                options: [
+                    "Это работы, при которых имеется возможность выделения в воздух рабочей зоны взрывопожароопасных или вредных паров, газов и других веществ, а также работы при недостаточном содержании кислорода, в том числе проводимые внутри аппаратов, емкостей, колодцев, тоннелей, траншей, приямков и других аналогичных местах.",
+                    "Это работы, при которых отсутствует возможность выделения в воздух рабочей зоны взрывопожароопасных или вредных паров, газов и других веществ, а также работы при недостаточном содержании кислорода, в том числе проводимые внутри аппаратов, емкостей, колодцев, тоннелей, траншей, приямков и других аналогичных местах"
+                ],
+                correct: 0,
+                explanation: "Правильный ответ: Это работы, при которых имеется возможность выделения в воздух рабочей зоны взрывопожароопасных или вредных паров, газов и других веществ... Объяснение: Газоопасные работы характеризуются риском выделения опасных веществ и недостатком кислорода."
+            },
+            {
+                question: "Разрешается ли стоять под стрелой грузоподъёмного механизма при ее подъеме и опускании?",
+                options: [
+                    "Разрешается",
+                    "Запрещается.",
+                    "Разрешается если поднимаемый груз не превышает 50 кг",
+                    "Правильные ответы 1 и 3"
+                ],
+                correct: 1,
+                explanation: "Правильный ответ: Запрещается. Объяснение: Находиться под стрелой грузоподъемного механизма запрещено из-за риска падения груза или стрелы."
+            },
+            {
+                question: "Что называется огневыми работами?",
+                options: [
+                    "Работы с применением открытого огня, искрообразованием и нагреванием до температуры воспламенения материалов и конструкций (электросварка, газосварка, бензино- и керосинорезательные работы, паяльные работы, механическая обработка металла с образованием искр и т. п.).",
+                    "Работы с применением закрытого огня, искрообразованием и нагреванием до температуры нагрева материалов и конструкций (электросварка, газосварка, бензино- и керосинорезательные работы, паяльные работы, механическая обработка металла с образованием искр и т. п.)",
+                    "Работы с применением огня, искрообразованием и нагреванием до температуры вспышки материалов и конструкций (электросварка, газосварка, бензино- и керосинорезательные работы, паяльные работы, механическая обработка металла с образованием искр и т. п.)"
+                ],
+                correct: 0,
+                explanation: "Правильный ответ: Работы с применением открытого огня, искрообразованием и нагреванием до температуры воспламенения материалов и конструкций... Объяснение: Огневые работы включают операции с открытым огнем, искрами или нагревом до температур воспламенения."
+            },
+            {
+                question: "Что необходимо неукоснительно выполнять при производстве работ повышенной опасности?",
+                options: [
+                    "Требования трудового кодекса",
+                    "Требования ООО «РН-Юганскнефтегаза»",
+                    "Поручение мастера",
+                    "Требования законодательства РФ, нормативных правовых документов РФ и локальных нормативных документов в области безопасности труда."
+                ],
+                correct: 3,
+                explanation: "Правильный ответ: Требования законодательства РФ, нормативных правовых документов РФ и локальных нормативных документов в области безопасности труда. Объяснение: При работах повышенной опасности необходимо строго соблюдать все требования законодательства и нормативных документов по безопасности."
+            },
+            {
+                question: "Разрешается ли перемещать людей грузоподъёмными механизмами, не предназначенными для данных целей?",
+                options: [
+                    "Разрешается",
+                    "Разрешается при условии наличия страховочного троса",
+                    "Запрещается.",
+                    "Разрешается если это прописано в наряде-допуске"
+                ],
+                correct: 2,
+                explanation: "Правильный ответ: Запрещается. Объяснение: Перемещение людей грузоподъемными механизмами, не предназначенными для этих целей, запрещено."
+            },
+            {
+                question: "Что необходимо оформить перед началом работ повышенной опасности?",
+                options: [
+                    "Акт",
+                    "Лицензию на объекты ООО «РН-Юганскнефтегаз»",
+                    "Наряд-допуск.",
+                    "Наряд-допуск и лицензию на объекты ООО «РН-Юганскнефтегаз»"
+                ],
+                correct: 2,
+                explanation: "Правильный ответ: Наряд-допуск. Объяснение: Перед началом работ повышенной опасности необходимо оформить наряд-допуск."
+            },
+            {
+                question: "«Золотые правила по безопасности труда» - это?",
+                options: [
+                    "Сборник инструкций ООО «РН-Юганскнефтегаза»",
+                    "Памятка",
+                    "Ключевые требования безопасного выполнения работ в виде отдельного документа (памятки)",
+                    "Регламент ООО «РН-Юганскнефтегаз».",
+                    "Свод правил в виде памятки"
+                ],
+                correct: 3,
+                explanation: "Правильный ответ: Регламент ООО «РН-Юганскнефтегаз». Объяснение: «Золотые правила по безопасности труда» являются регламентом организации."
+            },
+            {
+                question: "В каком случае запрещается снятие (отключение) блокировок у источников энергии?",
+                options: [
+                    "До полного завершения всех работ на оборудовании.",
+                    "До истечения времени действия наряда-допуска",
+                    "До письменного распоряжения главного инженера подрядной организации"
+                ],
+                correct: 0,
+                explanation: "Правильный ответ: До полного завершения всех работ на оборудовании. Объяснение: Блокировки можно снимать только после полного завершения всех работ на оборудовании."
+            },
+            {
+                question: "Должен ли быть обеспечен контроль состояния воздушной среды при работах в замкнутом пространстве?",
+                options: [
+                    "Должен.",
+                    "Не должен",
+                    "Должен, если не исключена возможность попадания извне вредных и взрывопожароопасных паров и газов"
+                ],
+                correct: 0,
+                explanation: "Правильный ответ: Должен. Объяснение: Контроль воздушной среды при работах в замкнутом пространстве обязателен."
+            },
+            {
+                question: "Что должны использовать лица, входящие в замкнутое пространство для отбора проб воздуха?",
+                options: [
+                    "Шланговый дыхательный аппарат",
+                    "Автономный дыхательный аппарат или шланговый противогаз и средства страховки.",
+                    "Фонарик и средства страховки",
+                    "Респиратор, шланговый противогаз и средства страховки",
+                    "Верно всё выше перечисленное"
+                ],
+                correct: 1,
+                explanation: "Правильный ответ: Автономный дыхательный аппарат или шланговый противогаз и средства страховки. Объяснение: Для входа в замкнутое пространство необходимо использовать автономный дыхательный аппарат или шланговый противогаз со средствами страховки."
+            },
+            {
+                question: "В каких случаях необходимо производить отбора проб воздуха при работах в замкнутом пространстве?",
+                options: [
+                    "При нахождении 1-го и более работников в замкнутом пространстве",
+                    "При нахождении 2-х и более работников в замкнутом пространстве",
+                    "При нахождении не менее 5 работников в замкнутом пространстве",
+                    "Правильные ответы 1,2,3."
+                ],
+                correct: 3,
+                explanation: "Правильный ответ: Правильные ответы 1,2,3. Объяснение: Отбор проб воздуха необходим при любом количестве работников в замкнутом пространстве."
+            },
+            {
+                question: "Работа на высоте это?",
+                options: [
+                    "Это работа при которой существуют риски, связанные с возможным падением работника с высоты 1,6 м и более",
+                    "Это работа при которой существуют риски, связанные с возможным падением работника с высоты 5 м и более",
+                    "Это работа при которой существуют риски, связанные с возможным падением работника с высоты 1,8 м и более."
+                ],
+                correct: 2,
+                explanation: "Правильный ответ: Это работа при которой существуют риски, связанные с возможным падением работника с высоты 1,8 м и более. Объяснение: Работа на высоте определяется риском падения с высоты 1,8 м и более."
+            },
+            {
+                question: "Каким должен быть угол наклона лестницы к горизонтальной поверхности при осуществлении работником подъема на высоту более 5 м по этой лестнице?",
+                options: [
+                    "45°",
+                    "75°.",
+                    "120°",
+                    "80°",
+                    "Не имеет значения"
+                ],
+                correct: 1,
+                explanation: "Правильный ответ: 75°. Объяснение: Угол наклона лестницы при подъеме на высоту более 5 м должен составлять 75°."
+            },
+            {
+                question: "При какой скорости ветра запрещены работы на высоте для всех работ?",
+                options: [
+                    "15 м/сек и более.",
+                    "10 м/сек и более",
+                    "12 м/сек и более"
+                ],
+                correct: 0,
+                explanation: "Правильный ответ: 15 м/сек и более. Объяснение: Для всех работ на высоте запрещена скорость ветра 15 м/с и более."
+            },
+            {
+                question: "На каком максимально близком расстоянии допускается работа ГПМ в зоне ЛЭП?",
+                options: [
+                    "10м",
+                    "20м",
+                    "30м.",
+                    "На любом расстоянии, при условии оформленного наряда-допуска",
+                    "Правильные ответы 1 и 4"
+                ],
+                correct: 2,
+                explanation: "Правильный ответ: 30м. Объяснение: Работа грузоподъемных механизмов в зоне ЛЭП допускается на расстоянии не менее 30м."
+            },
+            {
+                question: "Какое должно быть обеспечено расстояние от бровки котлована до извлечённого из него грунта?",
+                options: [
+                    "0,5м.",
+                    "1м",
+                    "0,75м"
+                ],
+                correct: 0,
+                explanation: "Правильный ответ: 0,5м. Объяснение: Расстояние от бровки котлована до извлеченного грунта должно быть не менее 0,5м."
+            },
+            {
+                question: "Должны ли транспортные средства быть оборудованы шинами, соответствующими времени года?",
+                options: [
+                    "Должны.",
+                    "Не должны"
+                ],
+                correct: 0,
+                explanation: "Правильный ответ: Должны. Объяснение: Транспортные средства должны быть оборудованы шинами, соответствующими сезону."
+            },
+            {
+                question: "Должен ли быть обеспечен необходимый контроль состояния воздушной среды на месте проведения огневых работ?",
+                options: [
+                    "Должен",
+                    "Не должен",
+                    "Только при условии, если имеется возможность выделения в воздух рабочей зоны взрывопожароопасных или вредных паров, газов и других веществ"
+                ],
+                correct: 0,
+                explanation: "Правильный ответ: Должен. Объяснение: Контроль воздушной среды при огневых работах обязателен."
+            },
+            {
+                question: "Какая дистанция должна быть между транспортными средствами при движении по ледовым переправам? (Инструкция № П3-05 И-0016 Приложение №1 п. 3.10.)",
+                options: [
+                    "10м",
+                    "20м",
+                    "30м.",
+                    "50м"
+                ],
+                correct: 2,
+                explanation: "Правильный ответ: 30м. Объяснение: При движении по ледовым переправам дистанция между транспортными средствами должна быть не менее 30м."
+            },
+            {
+                question: "Для кого обязательны выполнения требований «Золотых правил по безопасности труда»?",
+                options: [
+                    "Работниками ПАО «НК «Роснефть» и Обществ Группы",
+                    "Персоналом подрядных (субподрядных) организаций",
+                    "Только персоналом подрядных организаций",
+                    "Всем сотрудникам ООО «РН-Юганскнефтегаз»",
+                    "Работниками ПАО «НК «Роснефть» и Обществ Группы, персоналом подрядных/субподрядных организаций."
+                ],
+                correct: 4,
+                explanation: "Правильный ответ: Работниками ПАО «НК «Роснефть» и Обществ Группы, персоналом подрядных/субподрядных организаций. Объяснение: Требования «Золотых правил» обязательны для всех работников компании и подрядных организаций."
+            }
+        ];
+        
         // Глобальные переменные
         let currentTrainingIndex = 0;
         let examQuestions = [];
@@ -2221,6 +2635,8 @@
         let currentCardIndex = 0;
         let searchResults = [];
         let currentCategory = 'all';
+        let currentGoldRulesIndex = 0;
+        let goldRulesUserAnswers = [];
         
         // Показать экран
         function showScreen(screenId) {
@@ -2338,6 +2754,14 @@
                 document.getElementById('achievement4').classList.remove('locked');
                 document.getElementById('achievement4').classList.add('unlocked');
                 showAchievementModal('Мастер', 'Вы добавили более 20 вопросов в избранное!');
+            }
+            
+            // Достижение 5: Золотой мастер (пройдены все Золотые правила)
+            const goldRulesCompleted = localStorage.getItem('goldRulesCompleted') === 'true';
+            if (goldRulesCompleted && document.getElementById('achievement5').classList.contains('locked')) {
+                document.getElementById('achievement5').classList.remove('locked');
+                document.getElementById('achievement5').classList.add('unlocked');
+                showAchievementModal('Золотой мастер', 'Вы полностью освоили Золотые правила безопасности!');
             }
         }
         
@@ -2959,6 +3383,155 @@
                 currentCardIndex++;
                 document.getElementById('cardBtn').innerHTML = '<i class="fas fa-arrow-right"></i> Далее';
                 showCard();
+            }
+        }
+        
+        // Начать режим Золотых правил
+        function startGoldRules() {
+            currentGoldRulesIndex = 0;
+            goldRulesUserAnswers = [];
+            showScreen('goldRulesScreen');
+            document.getElementById('goldRulesCount').textContent = goldRulesQuestions.length;
+            showGoldRulesQuestion();
+        }
+        
+        // Показать вопрос в режиме Золотых правил
+        function showGoldRulesQuestion() {
+            if (currentGoldRulesIndex >= goldRulesQuestions.length) {
+                // Завершение тестирования Золотых правил
+                finishGoldRules();
+                return;
+            }
+            
+            const question = goldRulesQuestions[currentGoldRulesIndex];
+            document.getElementById('goldRulesQuestion').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('goldRulesOptions');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.onclick = () => selectGoldRulesOption(index);
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Обновить прогресс
+            const progress = ((currentGoldRulesIndex + 1) / goldRulesQuestions.length) * 100;
+            document.getElementById('goldRulesProgress').style.width = `${progress}%`;
+            
+            // Скрыть объяснение
+            document.getElementById('goldRulesExplanation').classList.remove('show');
+            
+            // Обновить кнопку избранного
+            updateGoldRulesFavoriteButton();
+        }
+        
+        // Выбор ответа в режиме Золотых правил
+        function selectGoldRulesOption(optionIndex) {
+            const question = goldRulesQuestions[currentGoldRulesIndex];
+            const options = document.querySelectorAll('#goldRulesOptions .option');
+            
+            // Отключить все варианты
+            options.forEach(opt => {
+                opt.onclick = null;
+                opt.classList.add('disabled');
+            });
+            
+            // Подсветить выбранный вариант
+            options[optionIndex].classList.add(optionIndex === question.correct ? 'correct' : 'incorrect');
+            
+            // Если ответ неверный, подсветить правильный
+            if (optionIndex !== question.correct) {
+                options[question.correct].classList.add('correct');
+            }
+            
+            // Показать объяснение
+            const explanationElement = document.getElementById('goldRulesExplanation');
+            explanationElement.textContent = question.explanation;
+            explanationElement.classList.add('show');
+            
+            // Сохранить ответ
+            goldRulesUserAnswers.push({
+                questionIndex: currentGoldRulesIndex,
+                selectedOption: optionIndex,
+                isCorrect: optionIndex === question.correct
+            });
+            
+            // Переход к следующему вопросу
+            currentGoldRulesIndex++;
+            setTimeout(() => {
+                showGoldRulesQuestion();
+            }, 2000);
+        }
+        
+        // Завершение тестирования Золотых правил
+        function finishGoldRules() {
+            // Подсчет правильных ответов
+            const correctAnswers = goldRulesUserAnswers.filter(answer => answer.isCorrect).length;
+            const percentage = Math.round((correctAnswers / goldRulesQuestions.length) * 100);
+            
+            // Сохранить факт завершения
+            if (percentage >= 80) {
+                localStorage.setItem('goldRulesCompleted', 'true');
+                updateAchievements();
+            }
+            
+            // Показать результаты
+            showScreen('resultScreen');
+            document.getElementById('resultScore').textContent = `${percentage}%`;
+            
+            let message = '';
+            if (percentage >= 90) {
+                message = 'Отлично! Вы полностью освоили Золотые правила безопасности!';
+            } else if (percentage >= 80) {
+                message = 'Хорошо! Вы хорошо усвоили Золотые правила безопасности.';
+            } else if (percentage >= 60) {
+                message = 'Удовлетворительно. Рекомендуется повторить Золотые правила.';
+            } else {
+                message = 'Тест не сдан. Необходимо изучить Золотые правила безопасности.';
+            }
+            
+            document.getElementById('resultMessage').textContent = message;
+            
+            // Добавить конфетти при успешном результате
+            if (percentage >= 80) {
+                createConfetti();
+            }
+        }
+        
+        // Обновить кнопку избранного для Золотых правил
+        function updateGoldRulesFavoriteButton() {
+            const favoriteBtn = document.getElementById('goldRulesFavoriteBtn');
+            const originalIndex = questions.findIndex(q => 
+                q.question === goldRulesQuestions[currentGoldRulesIndex].question
+            );
+            
+            if (originalIndex !== -1 && favorites.includes(originalIndex)) {
+                favoriteBtn.classList.add('active');
+                favoriteBtn.innerHTML = '<i class="fas fa-star"></i> Удалить из избранного';
+            } else {
+                favoriteBtn.classList.remove('active');
+                favoriteBtn.innerHTML = '<i class="fas fa-star"></i> Добавить в избранное';
+            }
+        }
+        
+        // Переключить избранное для Золотых правил
+        function toggleGoldRulesFavorite() {
+            const originalIndex = questions.findIndex(q => 
+                q.question === goldRulesQuestions[currentGoldRulesIndex].question
+            );
+            
+            if (originalIndex !== -1) {
+                const favoriteIndex = favorites.indexOf(originalIndex);
+                if (favoriteIndex !== -1) {
+                    favorites.splice(favoriteIndex, 1);
+                } else {
+                    favorites.push(originalIndex);
+                }
+                saveData();
+                updateGoldRulesFavoriteButton();
             }
         }
         
