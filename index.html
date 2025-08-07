@@ -327,6 +327,22 @@
             background: linear-gradient(45deg, #e67e22, #f39c12);
         }
         
+        .btn-leaderboard {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+        
+        .btn-leaderboard:hover {
+            background: linear-gradient(45deg, #c0392b, #e74c3c);
+        }
+        
+        .btn-feedback {
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+        }
+        
+        .btn-feedback:hover {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+        }
+        
         .hidden-mode {
             display: none !important;
         }
@@ -1183,61 +1199,226 @@
             border: 1px solid #f5c6cb;
         }
         
-        @media (max-width: 768px) {
+        /* Таблица лидеров */
+        .leaderboard-container {
+            background: var(--education-card);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .leaderboard-header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .leaderboard-table th, .leaderboard-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .leaderboard-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .leaderboard-table tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .leaderboard-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .leaderboard-rank {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        .leaderboard-score {
+            font-weight: bold;
+            color: var(--success-color);
+        }
+        
+        .leaderboard-date {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .no-leaderboard {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-color);
+            font-style: italic;
+        }
+        
+        /* Форма обратной связи */
+        .feedback-container {
+            background: var(--education-card);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feedback-header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .feedback-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .feedback-form input, .feedback-form textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .feedback-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .feedback-form input:focus, .feedback-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .feedback-form label {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .feedback-success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            display: none;
+        }
+        
+        /* Адаптивность для альбомной ориентации */
+        @media screen and (orientation: landscape) and (max-height: 600px) {
             .container {
+                max-width: 1200px;
                 padding: 20px;
                 margin: 10px;
             }
             
             h1 {
                 font-size: 1.8rem;
-                margin-bottom: 20px;
+                margin-bottom: 15px;
+            }
+            
+            .question-container, .gold-question-container {
+                padding: 20px;
+                margin-bottom: 15px;
             }
             
             .question {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
+                margin-bottom: 15px;
                 padding-left: 30px;
             }
             
             .question::before {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
             
             .option {
-                padding: 15px;
-                font-size: 0.95rem;
-                min-height: 60px;
+                padding: 12px;
+                font-size: 0.9rem;
+                min-height: 50px;
             }
             
             .btn {
-                padding: 16px 20px;
-                font-size: 1rem;
+                padding: 14px 18px;
+                font-size: 0.95rem;
+                margin: 8px 0;
             }
             
             .timer {
-                font-size: 1.2rem;
-                padding: 12px;
+                font-size: 1.1rem;
+                padding: 10px;
+                margin-bottom: 15px;
             }
             
             .ticket-info {
-                font-size: 1rem;
-                padding: 12px;
+                font-size: 0.95rem;
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .progress-bar {
+                height: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .result {
+                padding: 15px;
             }
             
             .result h2 {
-                font-size: 1.6rem;
+                font-size: 1.4rem;
+                margin-bottom: 15px;
             }
             
             .result-score {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
+                margin: 15px 0;
             }
             
             .result-message {
-                font-size: 1.1rem;
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+            
+            .achievements {
+                margin: 15px 0;
+            }
+            
+            .achievement {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .install-guide {
+                margin-top: 20px;
+                padding: 20px;
             }
         }
         
-        @media (max-width: 480px) {
+        /* Адаптивность для портретной ориентации */
+        @media screen and (orientation: portrait) and (max-width: 480px) {
             body {
                 padding: 5px;
             }
@@ -1315,6 +1496,26 @@
                 margin-bottom: 20px;
             }
         }
+        
+        /* Адаптивность для планшетов в альбомной ориентации */
+        @media screen and (orientation: landscape) and (min-width: 768px) and (max-width: 1024px) {
+            .container {
+                max-width: 1000px;
+                padding: 25px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .leaderboard-table {
+                font-size: 0.9rem;
+            }
+            
+            .leaderboard-table th, .leaderboard-table td {
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1336,6 +1537,8 @@
                 <button class="btn btn-restart hidden-mode" onclick="startTrainer()"><i class="fas fa-redo"></i> Тренажер ошибок</button>
                 <button class="btn btn-cards hidden-mode" onclick="startCards()"><i class="fas fa-clone"></i> Карточки</button>
                 <button class="btn btn-gold" onclick="startGoldRules()"><i class="fas fa-medal"></i> Золотые правила</button>
+                <button class="btn btn-leaderboard" onclick="startLeaderboard()"><i class="fas fa-trophy"></i> Таблица лидеров</button>
+                <button class="btn btn-feedback" onclick="startFeedback()"><i class="fas fa-comment-dots"></i> Предложить улучшение</button>
                 <button class="btn btn-admin" onclick="showAdminModal()"><i class="fas fa-user-shield"></i> Администратор</button>
             </div>
             
@@ -1540,6 +1743,55 @@
             </div>
         </div>
         
+        <!-- Экран таблицы лидеров -->
+        <div id="leaderboardScreen" class="screen">
+            <div class="leaderboard-container">
+                <div class="leaderboard-header"><i class="fas fa-trophy"></i> Таблица лидеров</div>
+                
+                <div id="leaderboardContent">
+                    <div class="no-leaderboard">Загрузка таблицы лидеров...</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="backToStart()"><i class="fas fa-arrow-left"></i> Вернуться в меню</button>
+            </div>
+        </div>
+        
+        <!-- Экран обратной связи -->
+        <div id="feedbackScreen" class="screen">
+            <div class="feedback-container">
+                <div class="feedback-header"><i class="fas fa-comment-dots"></i> Предложить улучшение</div>
+                
+                <form class="feedback-form" id="feedbackForm">
+                    <div>
+                        <label for="feedbackName">Ваше имя (необязательно):</label>
+                        <input type="text" id="feedbackName" placeholder="Введите ваше имя">
+                    </div>
+                    
+                    <div>
+                        <label for="feedbackEmail">Email (необязательно):</label>
+                        <input type="email" id="feedbackEmail" placeholder="your.email@example.com">
+                    </div>
+                    
+                    <div>
+                        <label for="feedbackMessage">Ваше предложение:</label>
+                        <textarea id="feedbackMessage" placeholder="Опишите ваше предложение по улучшению приложения..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Отправить</button>
+                </form>
+                
+                <div class="feedback-success" id="feedbackSuccess">
+                    <i class="fas fa-check-circle"></i> Спасибо! Ваше предложение отправлено.
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="backToStart()"><i class="fas fa-arrow-left"></i> Вернуться в меню</button>
+            </div>
+        </div>
+        
         <!-- Экран администратора -->
         <div id="adminScreen" class="screen">
             <div class="admin-panel">
@@ -1590,6 +1842,13 @@
                 </div>
             </div>
             
+            <div class="stats-container">
+                <h3>Предложения пользователей</h3>
+                <div id="feedbackList">
+                    <div class="no-stats">Нет предложений</div>
+                </div>
+            </div>
+            
             <div style="text-align: center; margin-top: 30px;">
                 <button class="btn" onclick="backToStart()"><i class="fas fa-arrow-left"></i> Вернуться в меню</button>
             </div>
@@ -1603,6 +1862,15 @@
             <input type="password" id="adminPassword" placeholder="Введите пароль" class="search-input">
             <button class="btn" onclick="checkAdminPassword()">Войти</button>
             <button class="btn" onclick="closeAdminModal()">Отмена</button>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для имени пользователя -->
+    <div id="nameModal" class="modal">
+        <div class="modal-content">
+            <h2>Введите ваше имя</h2>
+            <input type="text" id="userName" placeholder="Ваше имя" class="search-input">
+            <button class="btn" onclick="saveUserName()">Сохранить</button>
         </div>
     </div>
     
@@ -2472,11 +2740,11 @@
                     "Сборник инструкций ООО «РН-Юганскнефтегаза»",
                     "Памятка",
                     "Ключевые требования безопасного выполнения работ в виде отдельного документа (памятки)",
-                    "Регламент ООО «РН-Юганскнефтегаз».",
+                    "Регламент ООО «РН-Юганскнефтегаза».",
                     "Свод правил в виде памятки"
                 ],
                 correct: 3,
-                explanation: "Правильный ответ: Регламент ООО «РН-Юганскнефтегаз». Объяснение: «Золотые правила по безопасности труда» являются регламентом организации."
+                explanation: "Правильный ответ: Регламент ООО «РН-Юганскнефтегаза». Объяснение: «Золотые правила по безопасности труда» являются регламентом организации."
             },
             {
                 question: "В каком случае запрещается снятие (отключение) блокировок у источников энергии?",
@@ -2637,6 +2905,9 @@
         let currentCategory = 'all';
         let currentGoldRulesIndex = 0;
         let goldRulesUserAnswers = [];
+        let userName = '';
+        let leaderboardData = [];
+        let feedbackData = [];
         
         // Показать экран
         function showScreen(screenId) {
@@ -2648,6 +2919,12 @@
             // Обновляем статистику при входе в админку
             if (screenId === 'adminScreen') {
                 displayStats();
+                displayFeedbackList();
+            }
+            
+            // Загружаем таблицу лидеров
+            if (screenId === 'leaderboardScreen') {
+                loadLeaderboard();
             }
         }
         
@@ -2668,6 +2945,9 @@
             }));
             localStorage.setItem('darkTheme', document.body.classList.contains('dark-theme'));
             localStorage.setItem('customQuestions', JSON.stringify(questions));
+            localStorage.setItem('userName', userName);
+            localStorage.setItem('leaderboardData', JSON.stringify(leaderboardData));
+            localStorage.setItem('feedbackData', JSON.stringify(feedbackData));
         }
         
         // Загрузка данных из localStorage
@@ -2705,6 +2985,29 @@
                     }
                 } catch (e) {
                     console.error('Ошибка загрузки вопросов из localStorage:', e);
+                }
+            }
+            
+            const savedUserName = localStorage.getItem('userName');
+            if (savedUserName) {
+                userName = savedUserName;
+            }
+            
+            const savedLeaderboard = localStorage.getItem('leaderboardData');
+            if (savedLeaderboard) {
+                try {
+                    leaderboardData = JSON.parse(savedLeaderboard);
+                } catch (e) {
+                    console.error('Ошибка загрузки таблицы лидеров:', e);
+                }
+            }
+            
+            const savedFeedback = localStorage.getItem('feedbackData');
+            if (savedFeedback) {
+                try {
+                    feedbackData = JSON.parse(savedFeedback);
+                } catch (e) {
+                    console.error('Ошибка загрузки обратной связи:', e);
                 }
             }
         }
@@ -3079,6 +3382,9 @@
             const timeSpent = 30 * 60 - examTimeLeft;
             saveExamStats(percentage, timeSpent, examQuestions.length);
             
+            // Добавить в таблицу лидеров
+            addToLeaderboard(percentage, timeSpent);
+            
             // Показать результаты
             showScreen('resultScreen');
             document.getElementById('resultScore').textContent = `${percentage}%`;
@@ -3100,6 +3406,216 @@
             if (percentage >= 70) {
                 createConfetti();
             }
+        }
+        
+        // Добавить результат в таблицу лидеров
+        function addToLeaderboard(percentage, timeSpent) {
+            // Запросить имя пользователя, если его нет
+            if (!userName) {
+                showNameModal();
+                return;
+            }
+            
+            const entry = {
+                name: userName,
+                score: percentage,
+                time: timeSpent,
+                date: new Date().toISOString()
+            };
+            
+            // Добавить запись в начало массива
+            leaderboardData.unshift(entry);
+            
+            // Ограничить размер таблицы лидеров (топ 50)
+            if (leaderboardData.length > 50) {
+                leaderboardData = leaderboardData.slice(0, 50);
+            }
+            
+            // Сохранить в localStorage
+            saveData();
+        }
+        
+        // Показать модальное окно для ввода имени
+        function showNameModal() {
+            document.getElementById('nameModal').style.display = 'block';
+            document.getElementById('userName').value = '';
+            document.getElementById('userName').focus();
+        }
+        
+        // Сохранить имя пользователя
+        function saveUserName() {
+            const nameInput = document.getElementById('userName');
+            const name = nameInput.value.trim();
+            
+            if (name) {
+                userName = name;
+                saveData();
+                closeNameModal();
+                
+                // Если мы завершили экзамен, добавляем результат в таблицу лидеров
+                if (userAnswers.length > 0) {
+                    const correctAnswers = userAnswers.filter(answer => answer.isCorrect).length;
+                    const percentage = Math.round((correctAnswers / examQuestions.length) * 100);
+                    const timeSpent = 30 * 60 - examTimeLeft;
+                    addToLeaderboard(percentage, timeSpent);
+                }
+            }
+        }
+        
+        // Закрыть модальное окно имени
+        function closeNameModal() {
+            document.getElementById('nameModal').style.display = 'none';
+        }
+        
+        // Начать режим таблицы лидеров
+        function startLeaderboard() {
+            showScreen('leaderboardScreen');
+            loadLeaderboard();
+        }
+        
+        // Загрузить и отобразить таблицу лидеров
+        function loadLeaderboard() {
+            const content = document.getElementById('leaderboardContent');
+            
+            if (leaderboardData.length === 0) {
+                content.innerHTML = '<div class="no-leaderboard">Нет результатов в таблице лидеров</div>';
+                return;
+            }
+            
+            // Сортировка по баллам (по убыванию)
+            const sortedData = [...leaderboardData].sort((a, b) => {
+                if (b.score !== a.score) {
+                    return b.score - a.score;
+                }
+                return a.time - b.time; // При равных баллах - по времени
+            });
+            
+            // Создаем таблицу
+            let tableHTML = `
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Место</th>
+                            <th>Имя</th>
+                            <th>Результат</th>
+                            <th>Время</th>
+                            <th>Дата</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            // Добавляем топ 10 результатов
+            for (let i = 0; i < Math.min(10, sortedData.length); i++) {
+                const entry = sortedData[i];
+                const date = new Date(entry.date);
+                const formattedDate = `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}`;
+                const minutes = Math.floor(entry.time / 60);
+                const seconds = entry.time % 60;
+                const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Особое оформление для топ-3
+                let rankClass = '';
+                let rankIcon = '';
+                if (i === 0) {
+                    rankClass = 'leaderboard-rank';
+                    rankIcon = '🥇';
+                } else if (i === 1) {
+                    rankClass = 'leaderboard-rank';
+                    rankIcon = '🥈';
+                } else if (i === 2) {
+                    rankClass = 'leaderboard-rank';
+                    rankIcon = '🥉';
+                }
+                
+                tableHTML += `
+                    <tr>
+                        <td class="${rankClass}">${rankIcon} ${i + 1}</td>
+                        <td>${entry.name}</td>
+                        <td class="leaderboard-score">${entry.score}%</td>
+                        <td>${formattedTime}</td>
+                        <td class="leaderboard-date">${formattedDate}</td>
+                    </tr>
+                `;
+            }
+            
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+            
+            content.innerHTML = tableHTML;
+        }
+        
+        // Начать режим обратной связи
+        function startFeedback() {
+            showScreen('feedbackScreen');
+            document.getElementById('feedbackForm').reset();
+            document.getElementById('feedbackSuccess').style.display = 'none';
+        }
+        
+        // Обработчик отправки формы обратной связи
+        document.addEventListener('DOMContentLoaded', function() {
+            const feedbackForm = document.getElementById('feedbackForm');
+            if (feedbackForm) {
+                feedbackForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('feedbackName').value.trim();
+                    const email = document.getElementById('feedbackEmail').value.trim();
+                    const message = document.getElementById('feedbackMessage').value.trim();
+                    
+                    if (message) {
+                        const feedback = {
+                            name: name || 'Аноним',
+                            email: email || '',
+                            message: message,
+                            date: new Date().toISOString()
+                        };
+                        
+                        feedbackData.unshift(feedback);
+                        saveData();
+                        
+                        // Показать сообщение об успехе
+                        document.getElementById('feedbackSuccess').style.display = 'block';
+                        document.getElementById('feedbackForm').reset();
+                        
+                        // Скрыть сообщение через 3 секунды
+                        setTimeout(() => {
+                            document.getElementById('feedbackSuccess').style.display = 'none';
+                        }, 3000);
+                    }
+                });
+            }
+        });
+        
+        // Отобразить список предложений в админке
+        function displayFeedbackList() {
+            const feedbackList = document.getElementById('feedbackList');
+            
+            if (feedbackData.length === 0) {
+                feedbackList.innerHTML = '<div class="no-stats">Нет предложений</div>';
+                return;
+            }
+            
+            let html = '';
+            feedbackData.forEach((feedback, index) => {
+                const date = new Date(feedback.date);
+                const formattedDate = `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+                
+                html += `
+                    <div class="question-container" style="margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <strong>${feedback.name}</strong>
+                            <span style="font-size: 0.9rem; opacity: 0.7;">${formattedDate}</span>
+                        </div>
+                        <div style="margin-bottom: 10px;">${feedback.message}</div>
+                        ${feedback.email ? `<div style="font-size: 0.9rem; opacity: 0.7;">Email: ${feedback.email}</div>` : ''}
+                    </div>
+                `;
+            });
+            
+            feedbackList.innerHTML = html;
         }
         
         // Начать режим избранных вопросов
@@ -3832,12 +4348,52 @@
                     });
                 `));
             }
+            
+            // Обработчик для формы обратной связи
+            const feedbackForm = document.getElementById('feedbackForm');
+            if (feedbackForm) {
+                feedbackForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('feedbackName').value.trim();
+                    const email = document.getElementById('feedbackEmail').value.trim();
+                    const message = document.getElementById('feedbackMessage').value.trim();
+                    
+                    if (message) {
+                        const feedback = {
+                            name: name || 'Аноним',
+                            email: email || '',
+                            message: message,
+                            date: new Date().toISOString()
+                        };
+                        
+                        feedbackData.unshift(feedback);
+                        saveData();
+                        
+                        // Показать сообщение об успехе
+                        document.getElementById('feedbackSuccess').style.display = 'block';
+                        document.getElementById('feedbackForm').reset();
+                        
+                        // Скрыть сообщение через 3 секунды
+                        setTimeout(() => {
+                            document.getElementById('feedbackSuccess').style.display = 'none';
+                        }, 3000);
+                    }
+                });
+            }
         };
         
         // Обработка нажатия Enter в поле пароля
         document.getElementById('adminPassword').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 checkAdminPassword();
+            }
+        });
+        
+        // Обработка нажатия Enter в поле имени пользователя
+        document.getElementById('userName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                saveUserName();
             }
         });
     </script>
