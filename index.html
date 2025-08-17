@@ -237,14 +237,6 @@
             margin-right: 8px;
         }
         
-        .btn-exam {
-            background: linear-gradient(45deg, var(--danger-color), #c0392b);
-        }
-        
-        .btn-exam:hover {
-            background: linear-gradient(45deg, #c0392b, var(--danger-color));
-        }
-        
         .btn-hint {
             background: linear-gradient(45deg, var(--warning-color), #e67e22);
             font-size: 0.9rem;
@@ -1243,7 +1235,6 @@
                     Выберите режим:
                 </p>
                 <button class="btn" onclick="startTraining()"><i class="fas fa-graduation-cap"></i> Режим обучения</button>
-                <button class="btn btn-exam" onclick="startExam()"><i class="fas fa-file-alt"></i> Пройти экзамен</button>
                 <button class="btn btn-hos" onclick="startHOS()"><i class="fas fa-flask"></i> Тесты ХОС</button>
                 <button class="btn btn-restart hidden-mode" onclick="startTrainer()"><i class="fas fa-redo"></i> Тренажер ошибок</button>
                 <button class="btn btn-cards hidden-mode" onclick="startCards()"><i class="fas fa-clone"></i> Карточки</button>
@@ -1280,7 +1271,6 @@
                 </h3>
                 <ul style="padding-left: 20px; line-height: 1.8; font-size: 1rem;">
                     <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Режим обучения: это 63 вопроса без ограничения времени</li>
-                    <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Экзамен: это 30 минут, случайный билет (10 или 13 вопросов)</li>
                     <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Тесты ХОС </li>
                     <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Золотые правила: тестирование по ключевым требованиям безопасности</li>
                     <li><i class="fas fa-check-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>Ухпп ЦЕХ № 4</li>
@@ -1725,7 +1715,7 @@
             {
                 question: "Какие требования необходимо выполнять перед монтажом запорной арматуры?",
                 options: [
-                    "снять заглушки; расконсервировать запорную арматуру; заменить сальниковую набивку; при закрытом клиновым затворе очистить проходы от возможных загрязнений; очистить трубопровод от загрязнений, хорошо его закрепить; обеспечить полное совпадение болтовых отверстий фланцев на трубопроводе с отверстиями во фланцах задвижки."
+                    "снять заглушки; расконсервировать запорную арматуру; заменить сальниковую набивку; при закрытом клиновым затвором очистить проходы от возможных загрязнений; очистить трубопровод от загрязнений, хорошо его закрепить; обеспечить полное совпадение болтовых отверстий фланцев на трубопроводе с отверстиями во фланцах задвижки."
                 ],
                 correct: 0,
                 category: "Оборудование",
@@ -2082,7 +2072,7 @@
                 question: "Что обязан работник перед запуском транспортной ленты?",
                 options: [
                     "Перед запуском транспортерной ленты работник производит её визуальный осмотр на предмет наличия дефектов (механических повреждений, разрыв, прилегания транспортерной ленты к роликам и барабану, отсутствия провисания). При обнаружении неисправности немедленно сообщить непосредственному руководителю.",
-                    "Перед запуском транспортерной ленты работник производит её визуальный осмотр на предмет наличия дефектов (механических повреждений, разрыв, прилегания транспортерной ленты к роликам и барабану, отсутствия провисания"
+                    "Перед запуском транспортерной ленты работник производит её визуальный осмотр на предмет наличия дефектов (механических повреждений, разрыв, прилегания транспортерной ленты к роликам и барабану, отсутствия провисания)"
                 ],
                 correct: 0,
                 category: "Оборудование",
@@ -2215,7 +2205,7 @@
                 explanation: "Правильный ответ: 10 м/с и более. Объяснение: При монтаже-демонтаже конструкций работы на высоте запрещены при скорости ветра 10 м/с и более."
             },
             {
-                question: "Как должна доводиться памятка «Золотые правила по безопасности труда» до работников подрядных/субподрядных организаций:",
+                question: "Каким образом должно доводиться памятка «Золотые правила по безопасности труда» до работников подрядных/субподрядных организаций:",
                 options: [
                     "В ходе проведения вводного инструктажа",
                     "Размещения текста Памятки «Золотые правила безопасности труда» на информационных стендах для ознакомления",
@@ -2274,7 +2264,7 @@
                 question: "Что называется газоопасными работами?",
                 options: [
                     "Это работы, при которых имеется возможность выделения в воздух рабочей зоны взрывопожароопасных или вредных паров, газов и других веществ, а также работы при недостаточном содержании кислорода, в том числе проводимые внутри аппаратов, емкостей, колодцев, тоннелей, траншей, приямков и других аналогичных местах.",
-                    "Это работы, при которых отсутствует возможность выделения в воздух рабочей зоны взрывопожароопасных или вредных паров, газов и других веществ, а также работы при недостаточном содержании кислорода, в том числе проводимые внутри аппаратов, емкостей, колодцев, тоннелей, траншей, приямков и других аналогичных местах"
+                    "Это работы, при которых отсутствует возможность выделения в воздух рабочей зоны взрывопожароопасных или вредных паров, газов и других веществ, а также работы при недостаточном содержании кислорода, в том числе проводимые внутри аппаратов, емкостей, колодцев, тоннелей, траншей, приямков и других аналогичных мест"
                 ],
                 correct: 0,
                 explanation: "Правильный ответ: Это работы, при которых имеется возможность выделения в воздух рабочей зоны взрывопожароопасных или вредных паров, газов и других веществ... Объяснение: Газоопасные работы характеризуются риском выделения опасных веществ и недостатком кислорода."
@@ -2570,7 +2560,7 @@
                 options: [
                     "Журнал учета, инструкции, реестр устройств и протоколы проверок",
                     "Журнал учета, наряды-допуски, реестр устройств и акты испытаний",
-                    "Инструкции, наряды-допуски, реестр устройств и журнал учета с неполной информацией",
+                    "Инструкции, наряды-допуски, реестр устройств и акты испытаний",
                     "Журнал учета, инструкции, наряды-допуски, реестр устройств"
                 ],
                 correct: 3,
@@ -2801,7 +2791,7 @@
                 options: [
                     "С повреждениями, без маркировки, с истекшим сроком без коррозии",
                     "С повреждениями, без маркировки, с коррозией без истекшего срока",
-                    "С повреждениями, с истекшим сроком, с коррозией без отсутствия маркировки",
+                    "С повреждениями, истекшим сроком, с коррозией без отсутствия маркировки",
                     "С повреждениями, без маркировки, с истекшим сроком, с коррозией"
                 ],
                 correct: 3,
@@ -3218,8 +3208,8 @@
                 question: "Какие шланги запрещено использовать для закачивания любых типов жидкостей при проведении обработки на скважинах?",
                 options: [
                     "С повреждениями, без маркировки, не прошедшие испытания без несоответствия параметрам",
-                    "С повреждениями, без маркировки, не соответствующие параметрам без не прошедших испытаний",
-                    "С повреждениями, не прошедшие испытания, не соответствующие параметрам без отсутствия маркировки",
+                    "С повреждениями, без маркировки, не соответствующие параметры без не прошедших испытаний",
+                    "С повреждениями, не прошедшие испытания, не соответствующие параметры без отсутствия маркировки",
                     "С повреждениями, без маркировки, не прошедшие испытания, не соответствующие параметры"
                 ],
                 correct: 3,
@@ -3327,13 +3317,13 @@
             {
                 question: "При соблюдении каких условий должны выполняться работы на льду и движение по ледовым переправам? (Золотые правила безопасности труда)",
                 options: [
-                    "Проверка толщины льда, наличие наряда-допуска, СИЗ без ограждения зон и средств спасения",
-                    "Проверка толщины льда, наличие наряда-допуска, ограждение зон, средства спасения без СИЗ",
-                    "Проверка толщины льда, СИЗ, ограждение зон, средства спасения без наличия наряда-допуска",
-                    "Проверка толщины льда, наличие наряда-допуска, СИЗ, ограждение зон, средства спасения"
+                    "Проверка толщины льда, наличие наряда-допуска, СИЗ, ограждение зон, средства спасения; при ранении — остановить кровотечение, промыть рану, наложить повязку",
+                    "Проверка толщины льда, установка знаков, наличие спасательных средств, назначение наблюдающего; при ранении — остановить кровотечение, промыть рану, наложить повязку",
+                    "Проверка толщины льда, наличие спасательных средств, назначение наблюдающего без установки знаков; при ранении — остановить кровотечение, промыть рану, наложить повязку",
+                    "Проверка толщины льда, установка знаков, наличие спасательных средств, назначение наблюдающего; при ранении — остановить кровотечение, промыть рану, наложить повязку"
                 ],
                 correct: 3,
-                explanation: "Правильный ответ: Проверка толщины льда, наличие наряда-допуска, СИЗ, ограждение зон, средства спасения"
+                explanation: "Правильный ответ: Проверка толщины льда, установка знаков, наличие спасательных средств, назначение наблюдающего; при ранении — остановить кровотечение, промыть рану, наложить повязку"
             },
             {
                 question: "При какой температуре воздуха допускается эксплуатация емкостей технологических полиэтиленовых, работающих под давлением ниже 0,07 МПа?",
@@ -3479,7 +3469,7 @@
                 explanation: "Правильный ответ: Запираемое устройство для хранения блокировочных устройств: стационарные, переносные, индивидуальные, комбинированные"
             },
             {
-                question: "На какие рабочие места разрабатывается и утверждается план производства работ на высоте (ППР)?",
+                question: "На какие рабочие места разрабатывается и утверждается план производства работ на высоту (ППР)?",
                 options: [
                     "На рабочие места с работами на высоте более 1,8 м без средств подмащивания без объектов с риском падения",
                     "На рабочие места с работами на высоте более 1,8 м на объектах с риском падения без отсутствия средств подмащивания",
@@ -3490,16 +3480,8 @@
                 explanation: "Правильный ответ: На рабочие места с работами на высоте более 1,8 м без средств подмащивания, на объектах с риском падения"
             },
             {
-                question: "Каким образом должно быть организовано движение по ледовым переправам? Первая помощь при ранении?",
-                options: [
-                    "Проверка толщины льда, установка знаков, наличие спасательных средств без назначения наблюдающего; при ранении — остановить кровотечение, промыть рану, наложить повязку",
-                    "Проверка толщины льда, установка знаков, назначение наблюдающего без наличия спасательных средств; при ранении — остановить кровотечение, промыть рану, наложить повязку",
-                    "Проверка толщины льда, наличие спасательных средств, назначение наблюдающего без установки знаков; при ранении — остановить кровотечение, промыть рану, наложить повязку",
-                    "Проверка толщины льда, установка знаков, наличие спасательных средств, назначение наблюдающего; при ранении — остановить кровотечение, промыть рану, наложить повязку"
-                ],
-                correct: 3,
-                explanation: "Правильный ответ: Проверка толщины льда, установка знаков, наличие спасательных средств, назначение наблюдающего; при ранении — остановить кровотечение, промыть рану, наложить повязку"
-            },
+                 
+          
             {
                 question: "Что запрещается выполнять при нахождении на территории кустовой площадки?",
                 options: [
@@ -3850,200 +3832,82 @@
             }, 3000);
         }
         
-        // Начать экзамен
-        function startExam() {
-            // Определить размер билета (10 или 13 вопросов)
-            ticketSize = Math.random() < 0.5 ? 10 : 13;
-            
-            // Создать случайный билет
-            const shuffled = [...questions].sort(() => 0.5 - Math.random());
-            examQuestions = shuffled.slice(0, ticketSize);
-            
-            currentExamIndex = 0;
-            userAnswers = [];
-            examTimeLeft = 30 * 60; // 30 минут
-            
-            showScreen('examScreen');
-            document.getElementById('ticketInfo').textContent = `Билет №${Math.floor(Math.random() * 100) + 1} (${ticketSize} вопросов)`;
-            startExamTimer();
-            showExamQuestion();
+        // Начать режим ХОС
+        function startHOS() {
+            currentHOSIndex = 0;
+            hosHintsRemaining = 3;
+            showScreen('hosScreen');
+            document.getElementById('hosCount').textContent = hosQuestions.length;
+            updateHOSHintInfo();
+            showHOSQuestion();
         }
         
-        // Таймер экзамена
-        function startExamTimer() {
-            examTimer = setInterval(() => {
-                examTimeLeft--;
-                
-                const minutes = Math.floor(examTimeLeft / 60);
-                const seconds = examTimeLeft % 60;
-                document.getElementById('examTimer').textContent = 
-                    `Осталось времени: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-                
-                if (examTimeLeft <= 0) {
-                    finishExam();
-                }
-            }, 1000);
+        // Обновить информацию о подсказках для ХОС
+        function updateHOSHintInfo() {
+            document.getElementById('hosHintBtn').disabled = hosHintsRemaining <= 0;
+            document.getElementById('hosHintBtn').textContent = `Использовать подсказку (${hosHintsRemaining})`;
         }
         
-        // Показать вопрос в режиме экзамена
-        function showExamQuestion() {
-            if (currentExamIndex >= examQuestions.length) {
-                finishExam();
-                return;
-            }
-            
-            const question = examQuestions[currentExamIndex];
-            document.getElementById('examQuestion').textContent = question.question;
-            
-            const optionsContainer = document.getElementById('examOptions');
-            optionsContainer.innerHTML = '';
-            
-            question.options.forEach((option, index) => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'option';
-                optionElement.textContent = option;
-                optionElement.onclick = () => selectExamOption(index);
-                optionsContainer.appendChild(optionElement);
-            });
-            
-            // Обновить прогресс
-            const progress = ((currentExamIndex + 1) / examQuestions.length) * 100;
-            document.getElementById('examProgress').style.width = `${progress}%`;
-            
-            // Скрыть объяснение
-            document.getElementById('examExplanation').classList.remove('show');
-        }
-        
-        // Выбор ответа в режиме экзамена
-        function selectExamOption(optionIndex) {
-            const question = examQuestions[currentExamIndex];
-            const options = document.querySelectorAll('#examOptions .option');
-            
-            // Отключить все варианты
-            options.forEach(opt => {
-                opt.onclick = null;
-                opt.classList.add('disabled');
-            });
-            
-            // Подсветить выбранный вариант
-            options[optionIndex].classList.add(optionIndex === question.correct ? 'correct' : 'incorrect');
-            
-            // Если ответ неверный, подсветить правильный
-            if (optionIndex !== question.correct) {
-                options[question.correct].classList.add('correct');
-                
-                // Добавить в список неправильных
-                const originalIndex = questions.indexOf(question);
-                if (!incorrectAnswers.includes(originalIndex)) {
-                    incorrectAnswers.push(originalIndex);
-                    saveData();
-                }
-            }
-            
-            // Показать объяснение
-            const explanationElement = document.getElementById('examExplanation');
-            explanationElement.textContent = question.explanation;
-            explanationElement.classList.add('show');
-            
-            // Сохранить ответ
-            userAnswers.push({
-                questionIndex: currentExamIndex,
-                selectedOption: optionIndex,
-                isCorrect: optionIndex === question.correct
-            });
-            
-            currentExamIndex++;
-            setTimeout(() => {
-                showExamQuestion();
-            }, 1500);
-        }
-        
-        // Завершить экзамен
-        function finishExam() {
-            clearInterval(examTimer);
-            
-            // Подсчет правильных ответов
-            const correctAnswers = userAnswers.filter(answer => answer.isCorrect).length;
-            const percentage = Math.round((correctAnswers / examQuestions.length) * 100);
-            
-            // Сохранить статистику
-            const timeSpent = 30 * 60 - examTimeLeft;
-            saveExamStats(percentage, timeSpent, examQuestions.length);
-            
-            // Показать результаты
-            showScreen('resultScreen');
-            document.getElementById('resultScore').textContent = `${percentage}%`;
-            
-            let message = '';
-            if (percentage >= 90) {
-                message = 'Отлично! Вы сдали экзамен на отлично!';
-            } else if (percentage >= 70) {
-                message = 'Хорошо! Вы успешно сдали экзамен.';
-            } else if (percentage >= 50) {
-                message = 'Удовлетворительно. Рекомендуется повторить материал.';
-            } else {
-                message = 'Экзамен не сдан. Необходимо подготовиться и попробовать снова.';
-            }
-            
-            document.getElementById('resultMessage').textContent = message;
-            
-            // Добавить конфетти при успешном результате
-            if (percentage >= 70) {
-                createConfetti();
-            }
-        }
-        
-        // Начать режим избранных вопросов
-        function startFavorites() {
-            loadData();
-            
-            if (favorites.length === 0) {
-                alert('У вас нет избранных вопросов');
-                return;
-            }
-            
-            currentFavoritesIndex = 0;
-            userAnswers = [];
-            showScreen('favoritesScreen');
-            document.getElementById('favoritesCount').textContent = favorites.length;
-            showFavoritesQuestion();
-        }
-        
-        // Показать избранный вопрос
-        function showFavoritesQuestion() {
-            if (currentFavoritesIndex >= favorites.length) {
+        // Показать вопрос в режиме ХОС
+        function showHOSQuestion() {
+            if (currentHOSIndex >= hosQuestions.length) {
                 backToStart();
                 return;
             }
             
-            const questionIndex = favorites[currentFavoritesIndex];
-            const question = questions[questionIndex];
-            document.getElementById('favoritesQuestion').textContent = question.question;
+            const question = hosQuestions[currentHOSIndex];
+            typeWriter('hosQuestion', question.question);
             
-            const optionsContainer = document.getElementById('favoritesOptions');
+            const optionsContainer = document.getElementById('hosOptions');
             optionsContainer.innerHTML = '';
             
             question.options.forEach((option, index) => {
                 const optionElement = document.createElement('div');
                 optionElement.className = 'option';
                 optionElement.textContent = option;
-                optionElement.onclick = () => selectFavoritesOption(index);
+                optionElement.onclick = () => selectHOSOption(index);
                 optionsContainer.appendChild(optionElement);
             });
             
             // Обновить прогресс
-            const progress = ((currentFavoritesIndex + 1) / favorites.length) * 100;
-            document.getElementById('favoritesProgress').style.width = `${progress}%`;
+            const progress = ((currentHOSIndex + 1) / hosQuestions.length) * 100;
+            document.getElementById('hosProgress').style.width = `${progress}%`;
             
             // Скрыть объяснение
-            document.getElementById('favoritesExplanation').classList.remove('show');
+            document.getElementById('hosExplanation').classList.remove('show');
         }
         
-        // Выбор ответа в режиме избранных вопросов
-        function selectFavoritesOption(optionIndex) {
-            const questionIndex = favorites[currentFavoritesIndex];
-            const question = questions[questionIndex];
-            const options = document.querySelectorAll('#favoritesOptions .option');
+        // Использовать подсказку для ХОС
+        function useHOSHint() {
+            if (hosHintsRemaining <= 0) return;
+            
+            const question = hosQuestions[currentHOSIndex];
+            const options = document.querySelectorAll('#hosOptions .option');
+            
+            // Найти все неправильные варианты
+            const incorrectOptions = [];
+            for (let i = 0; i < options.length; i++) {
+                if (i !== question.correct) {
+                    incorrectOptions.push(i);
+                }
+            }
+            
+            // Удалить один случайный неправильный вариант
+            if (incorrectOptions.length > 0) {
+                const randomIndex = Math.floor(Math.random() * incorrectOptions.length);
+                const optionToRemove = incorrectOptions[randomIndex];
+                options[optionToRemove].style.display = 'none';
+                options[optionToRemove].classList.add('disabled');
+            }
+            
+            hosHintsRemaining--;
+            updateHOSHintInfo();
+        }
+        
+        // Выбор ответа в режиме ХОС
+        function selectHOSOption(optionIndex) {
+            const question = hosQuestions[currentHOSIndex];
+            const options = document.querySelectorAll('#hosOptions .option');
             
             // Отключить все варианты
             options.forEach(opt => {
@@ -4060,221 +3924,15 @@
             }
             
             // Показать объяснение
-            const explanationElement = document.getElementById('favoritesExplanation');
+            const explanationElement = document.getElementById('hosExplanation');
             explanationElement.textContent = question.explanation;
             explanationElement.classList.add('show');
             
-            // Сохранить ответ
-            userAnswers.push({
-                questionIndex: questionIndex,
-                selectedOption: optionIndex,
-                isCorrect: optionIndex === question.correct
-            });
-            
             // Переход к следующему вопросу
-            currentFavoritesIndex++;
+            currentHOSIndex++;
             setTimeout(() => {
-                showFavoritesQuestion();
+                showHOSQuestion();
             }, 2000);
-        }
-        
-        // Начать режим тренажера
-        function startTrainer() {
-            loadData();
-            
-            if (incorrectAnswers.length === 0) {
-                alert('У вас нет вопросов с ошибками');
-                return;
-            }
-            
-            currentTrainerIndex = 0;
-            userAnswers = [];
-            showScreen('trainerScreen');
-            document.getElementById('trainerCount').textContent = incorrectAnswers.length;
-            showTrainerQuestion();
-        }
-        
-        // Показать вопрос в режиме тренажера
-        function showTrainerQuestion() {
-            if (currentTrainerIndex >= incorrectAnswers.length) {
-                // Очистить список ошибок после успешного прохождения
-                incorrectAnswers = [];
-                saveData();
-                backToStart();
-                return;
-            }
-            
-            const questionIndex = incorrectAnswers[currentTrainerIndex];
-            const question = questions[questionIndex];
-            document.getElementById('trainerQuestion').textContent = question.question;
-            
-            const optionsContainer = document.getElementById('trainerOptions');
-            optionsContainer.innerHTML = '';
-            
-            question.options.forEach((option, index) => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'option';
-                optionElement.textContent = option;
-                optionElement.onclick = () => selectTrainerOption(index);
-                optionsContainer.appendChild(optionElement);
-            });
-            
-            // Обновить прогресс
-            const progress = ((currentTrainerIndex + 1) / incorrectAnswers.length) * 100;
-            document.getElementById('trainerProgress').style.width = `${progress}%`;
-            
-            // Скрыть объяснение
-            document.getElementById('trainerExplanation').classList.remove('show');
-        }
-        
-        // Выбор ответа в режиме тренажера
-        function selectTrainerOption(optionIndex) {
-            const questionIndex = incorrectAnswers[currentTrainerIndex];
-            const question = questions[questionIndex];
-            const options = document.querySelectorAll('#trainerOptions .option');
-            
-            // Отключить все варианты
-            options.forEach(opt => {
-                opt.onclick = null;
-                opt.classList.add('disabled');
-            });
-            
-            // Подсветить выбранный вариант
-            options[optionIndex].classList.add(optionIndex === question.correct ? 'correct' : 'incorrect');
-            
-            // Если ответ неверный, подсветить правильный
-            if (optionIndex !== question.correct) {
-                options[question.correct].classList.add('correct');
-            }
-            
-            // Показать объяснение
-            const explanationElement = document.getElementById('trainerExplanation');
-            explanationElement.textContent = question.explanation;
-            explanationElement.classList.add('show');
-            
-            // Сохранить ответ
-            userAnswers.push({
-                questionIndex: questionIndex,
-                selectedOption: optionIndex,
-                isCorrect: optionIndex === question.correct
-            });
-            
-            // Если ответ правильный, удалить вопрос из списка ошибок
-            if (optionIndex === question.correct) {
-                incorrectAnswers.splice(currentTrainerIndex, 1);
-                saveData();
-            } else {
-                currentTrainerIndex++;
-            }
-            
-            // Переход к следующему вопросу
-            setTimeout(() => {
-                showTrainerQuestion();
-            }, 2000);
-        }
-        
-        // Начать режим поиска
-        function startSearch() {
-            showScreen('searchScreen');
-            document.getElementById('searchInput').value = '';
-            document.getElementById('searchResults').innerHTML = '<div class="no-stats">Введите ключевые слова для поиска</div>';
-        }
-        
-        // Поиск вопросов
-        function searchQuestions() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-            
-            if (searchTerm === '') {
-                document.getElementById('searchResults').innerHTML = '<div class="no-stats">Введите ключевые слова для поиска</div>';
-                return;
-            }
-            
-            // Фильтрация вопросов по поисковому запросу и категории
-            searchResults = questions.filter(question => {
-                const matchesSearch = question.question.toLowerCase().includes(searchTerm) || 
-                                    question.options.some(option => option.toLowerCase().includes(searchTerm));
-                const matchesCategory = currentCategory === 'all' || question.category === currentCategory;
-                return matchesSearch && matchesCategory;
-            });
-            
-            displaySearchResults();
-        }
-        
-        // Отображение результатов поиска
-        function displaySearchResults() {
-            const resultsContainer = document.getElementById('searchResults');
-            
-            if (searchResults.length === 0) {
-                resultsContainer.innerHTML = '<div class="no-stats">Ничего не найдено</div>';
-                return;
-            }
-            
-            resultsContainer.innerHTML = '';
-            
-            searchResults.forEach((question, index) => {
-                const questionElement = document.createElement('div');
-                questionElement.className = 'question-container';
-                questionElement.innerHTML = `
-                    <div class="question">${index + 1}. ${question.question}</div>
-                    <div class="options">
-                        ${question.options.map((option, i) => `
-                            <div class="option ${i === question.correct ? 'correct' : ''}">${option}</div>
-                        `).join('')}
-                    </div>
-                    <div class="explanation">${question.explanation}</div>
-                `;
-                resultsContainer.appendChild(questionElement);
-            });
-        }
-        
-        // Фильтрация по категориям
-        function filterByCategory(category) {
-            currentCategory = category;
-            
-            // Обновление активной кнопки
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Повторный поиск с новой категорией
-            searchQuestions();
-        }
-        
-        // Начать режим карточек
-        function startCards() {
-            currentCardIndex = 0;
-            showScreen('cardsScreen');
-            document.getElementById('cardBtn').innerHTML = '<i class="fas fa-arrow-right"></i> Далее';
-            showCard();
-        }
-        
-        // Показать карточку
-        function showCard() {
-            if (currentCardIndex >= questions.length) {
-                currentCardIndex = 0;
-            }
-            
-            const question = questions[currentCardIndex];
-            document.getElementById('cardQuestion').textContent = question.question;
-            document.getElementById('cardAnswer').textContent = question.options[question.correct];
-            document.getElementById('cardAnswer').classList.remove('show');
-        }
-        
-        // Следующая карточка
-        function nextCard() {
-            const answerElement = document.getElementById('cardAnswer');
-            
-            if (!answerElement.classList.contains('show')) {
-                // Показать ответ
-                answerElement.classList.add('show');
-                document.getElementById('cardBtn').innerHTML = '<i class="fas fa-arrow-right"></i> Далее';
-            } else {
-                // Перейти к следующей карточке
-                currentCardIndex++;
-                document.getElementById('cardBtn').innerHTML = '<i class="fas fa-arrow-right"></i> Далее';
-                showCard();
-            }
         }
         
         // Начать режим Золотых правил
@@ -4424,109 +4082,6 @@
                 saveData();
                 updateGoldRulesFavoriteButton();
             }
-        }
-        
-        // Начать режим тестов ХОС
-        function startHOS() {
-            currentHOSIndex = 0;
-            hosHintsRemaining = 3;
-            showScreen('hosScreen');
-            document.getElementById('hosCount').textContent = hosQuestions.length;
-            updateHOSHintInfo();
-            showHOSQuestion();
-        }
-        
-        // Обновить информацию о подсказках для ХОС
-        function updateHOSHintInfo() {
-            document.getElementById('hosHintBtn').disabled = hosHintsRemaining <= 0;
-            document.getElementById('hosHintBtn').textContent = `Использовать подсказку (${hosHintsRemaining})`;
-        }
-        
-        // Показать вопрос в режиме ХОС
-        function showHOSQuestion() {
-            if (currentHOSIndex >= hosQuestions.length) {
-                backToStart();
-                return;
-            }
-            
-            const question = hosQuestions[currentHOSIndex];
-            typeWriter('hosQuestion', question.question);
-            
-            const optionsContainer = document.getElementById('hosOptions');
-            optionsContainer.innerHTML = '';
-            
-            question.options.forEach((option, index) => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'option';
-                optionElement.textContent = option;
-                optionElement.onclick = () => selectHOSOption(index);
-                optionsContainer.appendChild(optionElement);
-            });
-            
-            // Обновить прогресс
-            const progress = ((currentHOSIndex + 1) / hosQuestions.length) * 100;
-            document.getElementById('hosProgress').style.width = `${progress}%`;
-            
-            // Скрыть объяснение
-            document.getElementById('hosExplanation').classList.remove('show');
-        }
-        
-        // Использовать подсказку для ХОС
-        function useHOSHint() {
-            if (hosHintsRemaining <= 0) return;
-            
-            const question = hosQuestions[currentHOSIndex];
-            const options = document.querySelectorAll('#hosOptions .option');
-            
-            // Найти все неправильные варианты
-            const incorrectOptions = [];
-            for (let i = 0; i < options.length; i++) {
-                if (i !== question.correct) {
-                    incorrectOptions.push(i);
-                }
-            }
-            
-            // Удалить один случайный неправильный вариант
-            if (incorrectOptions.length > 0) {
-                const randomIndex = Math.floor(Math.random() * incorrectOptions.length);
-                const optionToRemove = incorrectOptions[randomIndex];
-                options[optionToRemove].style.display = 'none';
-                options[optionToRemove].classList.add('disabled');
-            }
-            
-            hosHintsRemaining--;
-            updateHOSHintInfo();
-        }
-        
-        // Выбор ответа в режиме ХОС
-        function selectHOSOption(optionIndex) {
-            const question = hosQuestions[currentHOSIndex];
-            const options = document.querySelectorAll('#hosOptions .option');
-            
-            // Отключить все варианты
-            options.forEach(opt => {
-                opt.onclick = null;
-                opt.classList.add('disabled');
-            });
-            
-            // Подсветить выбранный вариант
-            options[optionIndex].classList.add(optionIndex === question.correct ? 'correct' : 'incorrect');
-            
-            // Если ответ неверный, подсветить правильный
-            if (optionIndex !== question.correct) {
-                options[question.correct].classList.add('correct');
-            }
-            
-            // Показать объяснение
-            const explanationElement = document.getElementById('hosExplanation');
-            explanationElement.textContent = question.explanation;
-            explanationElement.classList.add('show');
-            
-            // Переход к следующему вопросу
-            currentHOSIndex++;
-            setTimeout(() => {
-                showHOSQuestion();
-            }, 2000);
         }
         
         // Инициализация при загрузке страницы
